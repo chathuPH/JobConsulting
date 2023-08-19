@@ -5,3 +5,5 @@
 1692303709912	Delete resource 'Servers/Tomcat v9.0 Server at localhost-config'
 1692303717928	Delete resource 'Servers'
 1692304410401	Delete resource 'JobConsulting'
+1692305216611	Delete resource 'JobConsulting/src/main/webapp/WEB-INF/lib/mssql-jdbc-12.4.0.jre8.jar'
+1692423567555	Delete resource 'JobConsulting/src/main/webapp/WEB-INF/lib/mssql-jdbc-12.4.0.jre8.jar'
