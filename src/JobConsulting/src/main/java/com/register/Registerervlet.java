@@ -11,12 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.connection.UserBA;
-import com.model.JSAlert;
 import com.model.UserModel;
 
-/**
- * Servlet implementation class Registerervlet
- */
+
 @WebServlet("/register")
 public class Registerervlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,21 +41,20 @@ public class Registerervlet extends HttpServlet {
 				
 				if(rowCount > 0) {
 					request.setAttribute("status", true);
+					request.setAttribute("massage", "Registation is sucessfully.");
 				}else {
 
 					request.setAttribute("status", false);
+					request.setAttribute("massage", "Registation is failed.");
 				}
 
 				dispatcher.forward(request, response);
 			}
 			else {
-				JSAlert jsAlert = new JSAlert();
-				String errorMsg = "Password and Confirm Password do not match";
-				jsAlert.AlertWithReload(errorMsg, response,"registration.jsp");
-				
 				dispatcher = request.getRequestDispatcher("registration.jsp");
 				request.setAttribute("status", false);
-				//dispatcher.forward(request, response);
+				request.setAttribute("massage", "Password and Confirm Password do not match");
+				dispatcher.forward(request, response);
 			}
 		}
 		catch(Exception ex) {

@@ -83,7 +83,18 @@
 
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 
+	<script>
+		var status = '<%=request.getAttribute("status")%>';
+		var massage = '<%=request.getAttribute("massage")%>';
+		if (status != null && status == "false") {
+			swal("Error!", massage, "error");
+		} else if (status != null && status == "true") {
+			swal("Success!", massage, "success");
+		}
+	</script>
 
 
 </body>

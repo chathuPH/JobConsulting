@@ -10971,3 +10971,12 @@ org.eclipse.jdt.internal.compiler.problem.AbortCompilation: Pb(347) The type com
 
 !ENTRY org.eclipse.lsp4e 1 0 2023-08-19 22:30:49.092
 !MESSAGE [Info]	ESLint server running in node v18.16.0
+
+!ENTRY org.eclipse.lsp4e 1 0 2023-08-20 00:52:42.113
+!MESSAGE [Info]	Using Typescript version (user-setting) 5.0.4 from path "C:\Users\asankay\.p2\pool\plugins\org.eclipse.wildwebdeveloper_1.0.7.202305232103\node_modules\typescript\lib\tsserver.js"
+
+!ENTRY org.eclipse.lsp4e 1 0 2023-08-20 00:52:42.121
+!MESSAGE [Info]	Typescript Server version info: {version=5.0.4, source=user-setting}
+
+!ENTRY org.eclipse.lsp4e 1 0 2023-08-20 00:52:42.344
+!MESSAGE [Info]	ESLint server running in node v18.16.0

@@ -31,13 +31,13 @@
 
 					<div class="signin-form">
 						<h2 class="form-title">LOGIN PAGE</h2>
-						<form method="" action="" class="register-form"
+						<form method="post" action="login" class="register-form"
 							id="login-form">
 							<div class="form-group">
-								<label for="username"><i
+								<label for="email"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
-									type="text" name="username" id="username"
-									placeholder="Your Name" />
+									type="email" name="username" id="email"
+									placeholder="Your Email" />
 							</div>
 							<div class="form-group">
 								<label for="password"><i class="zmdi zmdi-lock"></i></label> <input
@@ -54,22 +54,9 @@
 								<input type="submit" name="signin" id="signin"
 									class="form-submit" value="Log in" />
 							</div>
-							
-							
+
+
 						</form>
-						<!-- 
-						<div class="social-login">
-							<span class="social-label">Or login with</span>
-							<ul class="socials">
-								<li><a href="#"><i
-										class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-								<li><a href="#"><i
-										class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-								<li><a href="#"><i
-										class="display-flex-center zmdi zmdi-google"></i></a></li>
-							</ul>
-						</div>
-						-->
 					</div>
 				</div>
 			</div>
@@ -80,6 +67,18 @@
 	<!-- JS -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+
+	<script>
+		var status = '<%=request.getAttribute("status")%>';
+		var massage = '<%=request.getAttribute("massage")%>';
+		if (status != null && status == "false") {
+			swal("Error!", massage, "error");
+		} else if (status != null && status == "true") {
+			swal("Success!", massage, "success");
+		}
+	</script>
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

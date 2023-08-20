@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-	if(session.getAttribute("email")==null){
+if(session.getAttribute("email") == null) {
 		response.sendRedirect("login.jsp");
 	}
 %>
@@ -632,5 +632,18 @@
 	<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+
+	<script>
+		var status = '<%=request.getAttribute("status")%>';
+		var massage = '<%=request.getAttribute("massage")%>';
+		if (status != null && status == "false") {
+			swal("Error!", massage, "error");
+		} else if (status != null && status == "true") {
+			swal("Success!", massage, "success");
+		}
+	</script>
 </body>
 </html>
