@@ -2,19 +2,20 @@ package com.model;
 
 public class UserModel {
 
-	private String name,email,password,mobile;
+	private String name,email,password,mobile,userType;
 
 	
 	public UserModel() {
 		super();
 	}
 
-	public UserModel(String name, String email, String password, String mobile) {
+	public UserModel(String name, String email, String password, String mobile,String userType) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.mobile = mobile;
+		this.userType = userType;
 	}
 
 	public String getName() {
@@ -47,6 +48,14 @@ public class UserModel {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	
 	

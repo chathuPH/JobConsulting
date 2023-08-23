@@ -13,7 +13,7 @@
 
 <!-- Main css -->
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/index-styles.css">
 
 
 </head>
@@ -22,12 +22,12 @@
 	<div class="main">
 
 		<!-- Sign up form -->
-		<section class="signup">
+		<section class="signup" style="width: 70%; margin-left: 15%">
 			<div class="container">
 				<div class="signup-content">
 					<div class="signup-form">
 						<h2 class="form-title">SIGN UP PAGE</h2>
-					
+
 						<form method="post" action="register" class="register-form"
 							id="register-form">
 							<div class="form-group">
@@ -41,12 +41,22 @@
 							</div>
 							<div class="form-group">
 								<label for="pass"><i class="zmdi zmdi-lock"></i></label> <input
-									type="password" name="password" id="pass" placeholder="Password" />
+									type="password" name="password" id="pass"
+									placeholder="Password" />
 							</div>
 							<div class="form-group">
 								<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
 								<input type="password" name="cpassword" id="re_pass"
 									placeholder="Repeat your password" />
+							</div>
+							<div class="form-group">
+								
+								<select class="form-select form-select-sm"
+									name="userType" aria-label=".form-select-sm example">
+									<option selected>Select User Type</option>
+									<option value="Normal User">Normal User</option>
+									<option value="Consultant">Consultant</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="contact"><i class="zmdi zmdi-lock-outline"></i></label>
@@ -87,12 +97,15 @@
 	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 
 	<script>
-		var status = '<%=request.getAttribute("status")%>';
-		var massage = '<%=request.getAttribute("massage")%>';
+		var status = '<%=session.getAttribute("status")%>';
+		var massage = '<%=session.getAttribute("massage")%>';
+		const value = sessionStorage.getItem('regKey');
 		if (status != null && status == "false") {
 			swal("Error!", massage, "error");
-		} else if (status != null && status == "true") {
+			//sessionStorage.setItem('regKey', 1);
+		} else if (status != null && status == "true" && value == null) {
 			swal("Success!", massage, "success");
+			//sessionStorage.setItem('regKey', 1);
 		}
 	</script>
 

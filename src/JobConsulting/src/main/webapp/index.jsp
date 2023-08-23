@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%
-if(session.getAttribute("email") == null) {
-		response.sendRedirect("login.jsp");
-	}
+if (session.getAttribute("email") == null) {
+	response.sendRedirect("login.jsp");
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +13,12 @@ if(session.getAttribute("email") == null) {
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Freelancer - Start Bootstrap Theme</title>
+<title>Home Page - Job Consulting</title>
+
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
+
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	crossorigin="anonymous"></script>
 <!-- Google fonts-->
@@ -27,6 +29,8 @@ if(session.getAttribute("email") == null) {
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/index-styles.css" rel="stylesheet" />
+
+
 </head>
 <body id="page-top">
 	<!-- Navigation-->
@@ -34,7 +38,7 @@ if(session.getAttribute("email") == null) {
 		class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top"
 		id="mainNav">
 		<div class="container">
-			<a class="navbar-brand" href="#page-top">Unique Developer</a>
+			<a class="navbar-brand" href="#page-top">Job Consulting</a>
 			<button
 				class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
 				type="button" data-bs-toggle="collapse"
@@ -50,13 +54,19 @@ if(session.getAttribute("email") == null) {
 						class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
 					<li class="nav-item mx-0 mx-lg-1"><a
 						class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contact</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a
-						class="nav-link py-3 px-0 px-lg-3 rounded" href="">Logout</a></li>
-					
+					<li class="nav-item mx-0 mx-lg-1"><sapn
+							class="nav-link py-3 px-0 px-lg-3 rounded"><%=session.getAttribute("name")%></span></li>
+					<li class="nav-item mx-0 mx-lg-1 bg-danger" onClick="Logout()"><a
+						class="nav-link py-3 px-0 px-lg-3 rounded" href="logout">Logout</a></li>
+
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
+	
+	
+	
 	<!-- Masthead-->
 	<header class="masthead bg-primary text-white text-center">
 		<div class="container d-flex align-items-center flex-column">
@@ -64,7 +74,8 @@ if(session.getAttribute("email") == null) {
 			<img class="masthead-avatar mb-5" src="assets/img/avataaars.svg"
 				alt="..." />
 			<!-- Masthead Heading-->
-			<h1 class="masthead-heading text-uppercase mb-0">Welcome To Unique Developer</h1>
+			<h1 class="masthead-heading text-uppercase mb-0">Welcome To
+				Unique Developer</h1>
 			<!-- Icon Divider-->
 			<div class="divider-custom divider-light">
 				<div class="divider-custom-line"></div>
@@ -78,6 +89,126 @@ if(session.getAttribute("email") == null) {
 				Development - Web Development - Python</p>
 		</div>
 	</header>
+	
+	<div id="normalUser" style="display:none;">
+		<section class="page-section portfolio" id="portfolio">
+			<div class="container">
+				<!-- Portfolio Section Heading-->
+				<h2
+					class="page-section-heading text-center text-uppercase text-secondary mb-0">User</h2>
+				<!-- Icon Divider-->
+				<div class="divider-custom">
+					<div class="divider-custom-line"></div>
+					<div class="divider-custom-icon">
+						<i class="fas fa-star"></i>
+					</div>
+					<div class="divider-custom-line"></div>
+				</div>
+				<!-- Portfolio Grid Items-->
+				<div class="row justify-content-center">
+					<!-- Portfolio Item 1-->
+					<div class="col-md-6 col-lg-4 mb-5">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal1">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/cabin.png"
+								alt="..." />
+						</div>
+					</div>
+					<!-- Portfolio Item 2-->
+					<div class="col-md-6 col-lg-4 mb-5">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal2">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/cake.png"
+								alt="..." />
+						</div>
+					</div>
+					<!-- Portfolio Item 3-->
+					<div class="col-md-6 col-lg-4 mb-5">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal3">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/circus.png"
+								alt="..." />
+						</div>
+					</div>
+					<!-- Portfolio Item 4-->
+					<div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal4">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/game.png"
+								alt="..." />
+						</div>
+					</div>
+					<!-- Portfolio Item 5-->
+					<div class="col-md-6 col-lg-4 mb-5 mb-md-0">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal5">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/safe.png"
+								alt="..." />
+						</div>
+					</div>
+					<!-- Portfolio Item 6-->
+					<div class="col-md-6 col-lg-4">
+						<div class="portfolio-item mx-auto" data-bs-toggle="modal"
+							data-bs-target="#portfolioModal6">
+							<div
+								class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+								<div
+									class="portfolio-item-caption-content text-center text-white">
+									<i class="fas fa-plus fa-3x"></i>
+								</div>
+							</div>
+							<img class="img-fluid" src="assets/img/portfolio/submarine.png"
+								alt="..." />
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	
+	<div id="ConsultUser" style="display:none;">
+		
+	</div>
+	
+	<div id="adminUser" style="display:none;">
+		
+	</div>
+
 	<!-- Portfolio Section-->
 	<section class="page-section portfolio" id="portfolio">
 		<div class="container">
@@ -622,28 +753,65 @@ if(session.getAttribute("email") == null) {
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JS-->
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
-	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-	<!-- * *                               SB Forms JS                               * *-->
-	<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-	
+
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 
 	<script>
-		var status = '<%=request.getAttribute("status")%>';
-		var massage = '<%=request.getAttribute("massage")%>';
-		if (status != null && status == "false") {
+		var status = '<%=session.getAttribute("status")%>';
+		var massage = '<%=session.getAttribute("massage")%>';
+		const value = sessionStorage.getItem('indexKey');
+		
+		if (status != null && status == "false" && value == null) {
 			swal("Error!", massage, "error");
-		} else if (status != null && status == "true") {
+			sessionStorage.setItem('indexKey', 1);
+		} else if (status != null && status == "true" && value == null) {
 			swal("Success!", massage, "success");
+			sessionStorage.setItem('indexKey', 1);
 		}
+		
+		
+		function Logout(){
+			sessionStorage.clear();
+		}
+		
+		LoadUserDiv();
+		
+		function LoadUserDiv(){
+			
+			if(status != null && status == "true"){
+				const logedUserType = "<%=session.getAttribute("userType") %>";
+				
+				var normal = document.getElementById("normalUser");
+				var admin = document.getElementById("adminUser");
+				var consult = document.getElementById("ConsultUser");
+				
+				if(logedUserType == "Normal User"){
+					normal.style.display = "block";
+					admin.style.display = "none";
+					consult.style.display = "none";
+				}
+				if(logedUserType == "Consultant"){
+					normal.style.display = "none";
+					admin.style.display = "block";
+					consult.style.display = "none";
+				}
+				if(logedUserType == "Admin"){
+					normal.style.display = "none";
+					admin.style.display = "block";
+					consult.style.display = "none";
+				}
+			}
+			
+		}
+		
 	</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.register;
+package com.services;
 
 import java.io.IOException;
 
@@ -41,25 +41,33 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		RequestDispatcher dispatcher = null;
-
+		HttpSession session = request.getSession();
+		
 		try {
 
-			UserModel model = new UserModel("", email, password, "");
+			UserModel model = new UserModel("", email, password, "","");
 			UserBA userBA = new UserBA();
-
 			UserModel rowCount = userBA.LoginUser(model);
 
-			HttpSession session = request.getSession();
-
+			
 			if (rowCount != null) {
 				dispatcher = request.getRequestDispatcher("index.jsp");
-				request.setAttribute("status", true);
-				request.setAttribute("massage", "Login sucessfully.");
-				session.setAttribute("name", rowCount.getEmail());
+				
+				//request.setAttribute("status", true);
+				//request.setAttribute("massage", "Login sucessfully.");
+				
+
+				session.setAttribute("status", true);
+				session.setAttribute("massage", "Login sucessfully.");
+				
+				session.setAttribute("email", rowCount.getEmail());
+				session.setAttribute("name", rowCount.getName());
+				session.setAttribute("userType", rowCount.getUserType());
 			} else {
 				dispatcher = request.getRequestDispatcher("login.jsp");
-				request.setAttribute("status", false);
-				request.setAttribute("massage", "Login failed.");
+				session.setAttribute("status", false);
+				session.setAttribute("massage", "Login failed.");
+
 			}
 
 			dispatcher.forward(request, response);
@@ -68,8 +76,8 @@ public class LoginServlet extends HttpServlet {
 			ex.printStackTrace();
 
 			dispatcher = request.getRequestDispatcher("login.jsp");
-			request.setAttribute("status", false);
-			request.setAttribute("massage", "Login failed.");
+			session.setAttribute("status", false);
+			session.setAttribute("massage", "Login failed.");
 		}
 	}
 

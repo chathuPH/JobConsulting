@@ -36,7 +36,7 @@
 							<div class="form-group">
 								<label for="email"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
-									type="email" name="username" id="email"
+									type="email" name="email" id="email"
 									placeholder="Your Email" />
 							</div>
 							<div class="form-group">
@@ -71,12 +71,15 @@
 	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 
 	<script>
-		var status = '<%=request.getAttribute("status")%>';
-		var massage = '<%=request.getAttribute("massage")%>';
+		var status = '<%=session.getAttribute("status")%>';
+		var massage = '<%=session.getAttribute("massage")%>';
+		const value = sessionStorage.getItem('loginKey');
 		if (status != null && status == "false") {
 			swal("Error!", massage, "error");
-		} else if (status != null && status == "true") {
+			//sessionStorage.setItem('loginKey', 1);
+		} else if (status != null && status == "true" && value == null) {
 			swal("Success!", massage, "success");
+			//sessionStorage.setItem('loginKey', 1);
 		}
 	</script>
 </body>
