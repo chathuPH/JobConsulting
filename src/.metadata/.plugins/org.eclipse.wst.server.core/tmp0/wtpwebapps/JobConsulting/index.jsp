@@ -177,36 +177,22 @@
 				<div id="ConsultUser" style="display:none; min-height:580px">
 					<section id="about" class="about mt-5">
 						<div class="container" data-aos="fade-up">
-
 							<div class="row content">
 								<div class="col-lg-6">
-
-								</div>
-								<div class="col-lg-6 pt-4 pt-lg-0">
 									<form>
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Job Type</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
+											<label class="mb-2">Date</label>
+												<input type="date" name="" id="" class="form-control" />
 											</div>
 											<div class="col-sm-6 mb-2">
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Consultant</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
+											<label class="mb-2">Time</label>
+												<input type="time" name="" id="" class="form-control" />
 											</div>
 
 											<div class="col-sm-12 mb-2">
 												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Date and Time</option>
+													<option>Job Type</option>
 													<option>2</option>
 													<option>3</option>
 													<option>4</option>
@@ -220,12 +206,56 @@
 											</div>
 
 											<div class="col-sm-6 mb-2">
-												<button type="submit" class="btn btn-primary col-sm-12 mb-2">Book
-													Appointment</button>
+												<button type="submit" class="btn btn-primary col-sm-12 mb-2">Add
+													Appointment Time</button>
 											</div>
 										</div>
 
 									</form>
+								</div>
+								<div class="col-lg-6 pt-4 pt-lg-0">
+								
+									<div class="section-title">
+										<h2>Consultant</h2>
+										<p>Available Time</p>
+									</div>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Job Type</th>
+												<th scope="col">Consultant</th>
+												<th scope="col">Date and Time</th>
+												<th scope="col">Status</th>
+												<th scope="col">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+												<td>Finished</td>
+												<td>
+													<button type="button" class="btn btn-outline-danger"><i
+															class="ri-delete-bin-line"></i></button>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">1</th>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+												<td>Not Started</td>
+												<td>
+													<button type="button" class="btn btn-outline-danger"><i
+															class="ri-delete-bin-line"></i></button>
+												</td>
+											</tr>
+
+										</tbody>
+									</table>
 								</div>
 							</div>
 
