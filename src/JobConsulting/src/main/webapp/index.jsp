@@ -71,32 +71,32 @@
 									<form>
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Job Type</label>
 												<select class="form-control" id="exampleFormControlSelect1">
 													<option>Job Type</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													<option>Software Engineer</option>
+													<option>Doctor</option>
+													<option>Teacher</option>
 												</select>
 											</div>
 											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Consultant</label>
 												<select class="form-control" id="exampleFormControlSelect1">
 													<option>Consultant</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													<option>Bob Harizon</option>
+													<option>John Smith</option>
 												</select>
 											</div>
 
-											<div class="col-sm-12 mb-2">
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Date and Time</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
+											
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Date</label>
+												<input type="date" name="" id="" class="form-control" />
+											</div>
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Time</label>
+												<input type="time" name="" id="" class="form-control" />
 											</div>
 
 											<div class="col-sm-6 mb-2">
@@ -132,29 +132,29 @@
 												<th scope="col">#</th>
 												<th scope="col">Job Type</th>
 												<th scope="col">Consultant</th>
-												<th scope="col">Date and Time</th>
-												<th scope="col">Status</th>
+												<th scope="col">Date</th>
+												<th scope="col">Time</th>
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Finished</td>
+												<td>Software Engineer</td>
+												<td>Bob Harizon</td>
+												<td>29/08/2023</td>
+												<td>8.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>
 												</td>
 											</tr>
 											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Not Started</td>
+												<th scope="row">2</th>
+												<td>Software Engineer</td>
+												<td>John Smith</td>
+												<td>30/08/2023</td>
+												<td>8.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>
@@ -191,12 +191,12 @@
 											</div>
 
 											<div class="col-sm-12 mb-2">
+												<label class="mb-2">Job Type</label>
 												<select class="form-control" id="exampleFormControlSelect1">
 													<option>Job Type</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													<option>Software Engineer</option>
+													<option>Doctor</option>
+													<option>Teacher</option>
 												</select>
 											</div>
 
@@ -206,8 +206,8 @@
 											</div>
 
 											<div class="col-sm-6 mb-2">
-												<button type="submit" class="btn btn-primary col-sm-12 mb-2">Add
-													Appointment Time</button>
+												<button type="submit" class="btn btn-primary col-sm-12 mb-2">Set
+													Available Time</button>
 											</div>
 										</div>
 
@@ -224,30 +224,27 @@
 											<tr>
 												<th scope="col">#</th>
 												<th scope="col">Job Type</th>
-												<th scope="col">Consultant</th>
-												<th scope="col">Date and Time</th>
-												<th scope="col">Status</th>
+												<th scope="col">Date</th>
+												<th scope="col">Time</th>
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Finished</td>
+												<td>Software Engineering</td>
+												<td>28/08/2023</td>
+												<td>8.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>
 												</td>
 											</tr>
 											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Not Started</td>
+												<th scope="row">2</th>
+												<td>Doctor</td>
+												<td>28/08/2023</td>
+												<td>10.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>
@@ -275,31 +272,31 @@
 										<thead>
 											<tr>
 												<th scope="col">#</th>
+												<th scope="col">Name</th>
 												<th scope="col">Job Type</th>
-												<th scope="col">Consultant</th>
-												<th scope="col">Date and Time</th>
-												<th scope="col">Status</th>
+												<th scope="col">Date</th>
+												<th scope="col">Time</th>
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Finished</td>
+												<td>Asanka</td>
+												<td>Software Engineering</td>
+												<td>28/08/2023</td>
+												<td>8.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>
 												</td>
 											</tr>
 											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-												<td>Not Started</td>
+												<th scope="row">2</th>
+												<td>Smith</td>
+												<td>Doctor</td>
+												<td>28/08/2023</td>
+												<td>10.30 PM</td>
 												<td>
 													<button type="button" class="btn btn-outline-danger"><i
 															class="ri-delete-bin-line"></i></button>

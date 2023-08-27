@@ -74,11 +74,12 @@
 		var status = '<%=session.getAttribute("status")%>';
 		var massage = '<%=session.getAttribute("massage")%>';
 		const value = sessionStorage.getItem('loginKey');
+		const regKey = sessionStorage.getItem('regKey');
 		if (status != null && status == "false") {
 			swal("Error!", massage, "error");
 			//sessionStorage.setItem('loginKey', 1);
 		} else if (status != null && status == "true" && value == null) {
-			swal("Success!", massage, "success");
+			//swal("Success!", massage, "success");
 			//sessionStorage.setItem('loginKey', 1);
 		}
 	</script>
