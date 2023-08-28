@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
 
 			HttpSession session = request.getSession();
 			if (password.equals(cPassword)) {
-				UserModel model = new UserModel(name, email, password, mobile,userType);
+				UserModel model = new UserModel(0,name, email, password, mobile,userType);
 				UserBA userBA = new UserBA();
 				
 				int rowCount = userBA.CreateUser(model);

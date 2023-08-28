@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 		
 				try {
 		
-					UserModel model = new UserModel("", email, password, "","");
+					UserModel model = new UserModel(0,"", email, password, "","");
 					UserBA userBA = new UserBA();
 					UserModel rowCount = userBA.LoginUser(model);
 		
@@ -45,10 +45,12 @@ public class LoginServlet extends HttpServlet {
 		
 						session.setAttribute("status", true);
 						session.setAttribute("massage", "Login sucessfully.");
-						
 						session.setAttribute("email", rowCount.getEmail());
 						session.setAttribute("name", rowCount.getName());
 						session.setAttribute("userType", rowCount.getUserType());
+						session.setAttribute("userId", rowCount.getId());
+						
+						
 					} else {
 						dispatcher = request.getRequestDispatcher("login.jsp");
 						session.setAttribute("status", false);

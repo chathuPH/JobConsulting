@@ -41,7 +41,7 @@ public class UserBA {
 			DataAccess dataAccess = new DataAccess();
 			dataAccess.LoadDriver();
 			Connection con = dataAccess.GetConnecion();
-			String query = "SELECT US_NAME, US_EMAIL, US_MOBILE, US_TYPE FROM JOC_USERS WHERE US_EMAIL = ? AND US_PASSWORD = ?";
+			String query = "SELECT US_ID, US_NAME, US_EMAIL, US_MOBILE, US_TYPE FROM JOC_USERS WHERE US_EMAIL = ? AND US_PASSWORD = ?";
 			PreparedStatement pst = con.prepareStatement(query);
 
 			pst.setString(1, model.getEmail());
@@ -49,7 +49,7 @@ public class UserBA {
 
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				responceModel = new UserModel(rs.getString("US_NAME"),rs.getString("US_EMAIL"),"",rs.getString("US_MOBILE"),rs.getString("US_TYPE"));
+				responceModel = new UserModel(rs.getInt("US_ID"), rs.getString("US_NAME"),rs.getString("US_EMAIL"),"",rs.getString("US_MOBILE"),rs.getString("US_TYPE"));
 			}
 			con.close();
 		} catch (SQLException e) {

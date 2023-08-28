@@ -71,7 +71,7 @@
 
 								</div>
 								<div class="col-lg-6 pt-4 pt-lg-0">
-									<form action="" method="post">
+									<form action="book-appointment" method="post">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Job Type</label>
@@ -223,9 +223,9 @@
 												<label class="mb-2">Job Type</label>
 												<select class="form-control" id="exampleFormControlSelect1" name="jobType">
 													<option></option>
-													<option>Software Engineer</option>
-													<option>Doctor</option>
-													<option>Teacher</option>
+													<option value="1">Software Engineer</option>
+													<option value="2">Teacher</option>
+													<option value="3">Doctor</option>
 												</select>
 											</div>
 
@@ -383,7 +383,7 @@
 
 			<!-- Template Main JS File -->
 			<script src="assets/js/main.js"></script>
-			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+			<script src="assets/vendor/alert/sweetalert.min.js"></script>
 			<link rel="stylesheet" href="alert/dist/sweetalert.css">
 			<script>
 				var status = '<%=session.getAttribute("status")%>';

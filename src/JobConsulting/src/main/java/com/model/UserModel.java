@@ -3,21 +3,31 @@ package com.model;
 public class UserModel {
 
 	private String name,email,password,mobile,userType;
+	private int id;
 
 	
 	public UserModel() {
 		super();
 	}
 
-	public UserModel(String name, String email, String password, String mobile,String userType) {
+	public UserModel(int id,String name, String email, String password, String mobile,String userType) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.mobile = mobile;
 		this.userType = userType;
+		this.id = id;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}

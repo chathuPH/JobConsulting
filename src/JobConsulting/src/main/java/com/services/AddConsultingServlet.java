@@ -28,15 +28,23 @@ public class AddConsultingServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String date = request.getParameter("date");
 		String time = request.getParameter("time");
+		
 		int jobId = Integer.parseInt(request.getParameter("jobType"));
-		int userId = Integer.parseInt(request.getParameter("userId"));
-	
+		//int userId = Integer.parseInt(request.getParameter("userId"));
+		int userId = 0;
+		
+		
 		
 		RequestDispatcher dispatcher = null;
+		
 		
 		try {
 
 			HttpSession session = request.getSession();
+			
+			Object uidObj = session.getAttribute("userId");
+			String uid = uidObj.toString();
+			userId = Integer.parseInt(uid);
 
 			ConsultModel model = new ConsultModel( 0, jobId, userId, date,time);
 			ConsultBA userBA = new ConsultBA();
