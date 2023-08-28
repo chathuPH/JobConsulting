@@ -67,11 +67,17 @@ public class RegisterServlet extends HttpServlet {
 				session.setAttribute("status", false);
 				session.setAttribute("massage", "Password and Confirm Password do not match");
 				
+				LogError logger = LogError.getInstance();
+		        logger.LogToConsole("Password and Confirm Password do not match");
+				
 				dispatcher.forward(request, response);
 			}
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			LogError logger = LogError.getInstance();
+	        logger.LogToConsole(ex.toString());
+			
 		}
 	}
 

@@ -1,3 +1,6 @@
+
+<%@ page import="java.util.List" %>
+<%@ page import="com.model.JobTypeModel" %>
 <!DOCTYPE html>
 <html lang="en">
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
@@ -68,24 +71,50 @@
 
 								</div>
 								<div class="col-lg-6 pt-4 pt-lg-0">
-									<form>
+									<form action="" method="post">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Job Type</label>
-												<select class="form-control" id="exampleFormControlSelect1">
+												<select class="form-control" id="jobType" name="jobType">
 													<option>Job Type</option>
-													<option>Software Engineer</option>
-													<option>Doctor</option>
-													<option>Teacher</option>
+													<option value="1">Software Engineer</option>
+													<option value="2">Teacher</option>
+													<option value="3">Doctor</option>
 												</select>
+												
 											</div>
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Consultant</label>
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Consultant</option>
-													<option>Bob Harizon</option>
-													<option>John Smith</option>
+												<select class="form-control" id="consultant" name="consultant">
+													<option value="1">Consultant</option>
+													<option value="2">Bob Harizon</option>
+													<option value="3">John Smith</option>
 												</select>
+												
+												<select class="form-control" id="jobTypeSelect" name="jobTypeSelect">
+											        <% 
+											        List<JobTypeModel> jobTypes = (List<JobTypeModel>) request.getAttribute("jobType");
+											        if (jobTypes != null) {
+											            for (JobTypeModel jobType : jobTypes) {
+											        %>
+											            <option value="<%= jobType.getId() %>"><%= jobType.getName() %></option>
+											        <% 
+											            }
+											        }
+											        %>
+											    </select>
+											    
+											    <select id="jobTypeSelect" name="jobTypeSelect">
+											        <!-- Options will be inserted here -->
+											    </select>
+											    
+											    <select id="jobTypeSelect">
+												    <c:forEach var="jobType" items="${jobTypeList}">
+												        <option value="${jobType.id}">${jobType.name}</option>
+												    </c:forEach>
+												</select>
+											    
+												
 											</div>
 
 											
@@ -179,21 +208,21 @@
 						<div class="container" data-aos="fade-up">
 							<div class="row content">
 								<div class="col-lg-6">
-									<form>
+									<form action="add-consult" method="post">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
 											<label class="mb-2">Date</label>
-												<input type="date" name="" id="" class="form-control" />
+												<input type="date" name="date" id="date" class="form-control" />
 											</div>
 											<div class="col-sm-6 mb-2">
 											<label class="mb-2">Time</label>
-												<input type="time" name="" id="" class="form-control" />
+												<input type="time" name="time" id=""time class="form-control" />
 											</div>
 
 											<div class="col-sm-12 mb-2">
 												<label class="mb-2">Job Type</label>
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Job Type</option>
+												<select class="form-control" id="exampleFormControlSelect1" name="jobType">
+													<option></option>
 													<option>Software Engineer</option>
 													<option>Doctor</option>
 													<option>Teacher</option>
@@ -401,6 +430,27 @@
 							consult.style.display = "none";
 						}
 					}
+
+				}
+				LoadJobType();
+				function LoadJobType(){
+					debugger;
+					fetch('http://localhost:7590/JobConsulting/get-job-type')
+		            .then(response => response.json()) // Assuming the response is JSON
+		            .then(data => {
+		                const jobTypeSelect = document.getElementById('jobTypeSelect');
+
+						debugger;
+		                data.forEach(jobType => {
+		                    const option = document.createElement('option');
+		                    option.value = jobType.id;
+		                    option.textContent = jobType.name;
+		                    jobTypeSelect.appendChild(option);
+		                });
+		            })
+		            .catch(error => {
+		                console.log('Error:', error);
+		            });
 
 				}
 

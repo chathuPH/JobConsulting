@@ -10,6 +10,7 @@ import java.util.List;
 import com.model.JobTypeModel;
 
 public class JobTypeBA {
+	
 	public int CreateJobType(JobTypeModel model) {
 		int rowCount = -1;
 		try {

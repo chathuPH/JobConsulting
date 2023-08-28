@@ -14,5 +14,9 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Users/asankay/Downloads/mysql-connector-java-8.0.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/asankay/Downloads/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/asankay/Downloads/jackson-annotations-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/asankay/Downloads/jackson-core-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/asankay/Downloads/jackson-databind-2.15.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
