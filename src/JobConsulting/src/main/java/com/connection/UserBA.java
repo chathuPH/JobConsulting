@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import com.model.JobTypeModel;
 import com.model.UserModel;
 
 public class UserBA {
@@ -57,6 +59,34 @@ public class UserBA {
 		}
 
 		return responceModel;
+
+	}
+	
+	public List<UserModel> GetUsers() {
+
+		List<UserModel> responseModel = null;
+
+		try {
+			DataAccess dataAccess = new DataAccess();
+			dataAccess.LoadDriver();
+			Connection con = dataAccess.GetConnecion();
+			String query = "SELECT US_ID, US_NAME, US_EMAIL, US_MOBILE, US_TYPE FROM JOC_USERS";
+			PreparedStatement pst = con.prepareStatement(query);
+
+			ResultSet rs = pst.executeQuery();
+			
+	        while (rs.next()) {
+	            int jobId = rs.getInt("JOB_ID");
+	            String jobName = rs.getString("JOB_NAME");
+	            UserModel model = new UserModel(rs.getInt("US_ID"), rs.getString("US_NAME"),rs.getString("US_EMAIL"),"",rs.getString("US_MOBILE"),rs.getString("US_TYPE"));
+	            responseModel.add(model);
+	        }
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return responseModel;
 
 	}
 

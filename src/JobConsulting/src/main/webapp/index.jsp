@@ -87,6 +87,10 @@ if (session.getAttribute("email") == null) {
 							</div>
 						</div>
 						<div class="col-lg-6 pt-4 pt-lg-0">
+						<div class="card p-2 mt-5">
+							<div class="section-title text-center">
+								<p>Add new Appointment</p>
+							</div>
 							<form action="book-appointment" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
@@ -128,6 +132,7 @@ if (session.getAttribute("email") == null) {
 								</div>
 
 							</form>
+						</div>
 						</div>
 					</div>
 
@@ -198,6 +203,10 @@ if (session.getAttribute("email") == null) {
 				<div class="container" data-aos="fade-up">
 					<div class="row content">
 						<div class="col-lg-6">
+						<div class="card p-2 mt-5">
+						<div class="section-title text-center">
+								<p>Add Available Time</p>
+							</div>
 							<form action="add-consult" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
@@ -226,6 +235,7 @@ if (session.getAttribute("email") == null) {
 								</div>
 
 							</form>
+							</div>
 						</div>
 						<div class="col-lg-6 pt-4 pt-lg-0">
 
