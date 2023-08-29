@@ -371,7 +371,7 @@ if (session.getAttribute("email") == null) {
 									<h2>Consultant Available Time</h2>
 								</div>
 								<div class="col-lg-6">
-									<form action="add-consult" method="post">
+									<form action="admin-add-consult" method="post">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Date</label> <input type="date"
@@ -395,7 +395,7 @@ if (session.getAttribute("email") == null) {
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Consultant</label> <select
 													class="form-control" id="exampleFormControlSelect1"
-													name="jobType">
+													name="conUser">
 													<option></option>
 													<option value="1">Bob Harizon</option>
 													<option value="2">John Smith</option>
@@ -466,9 +466,6 @@ if (session.getAttribute("email") == null) {
 			<section id="counts" class="counts">
 				<div class="container" data-aos="fade-up">
 
-
-
-
 					<div class="row no-gutters">
 
 						<div class="card">
@@ -478,7 +475,7 @@ if (session.getAttribute("email") == null) {
 								</div>
 								
 								<div class="col-lg-6 pt-4 pt-lg-0">
-							<form action="book-appointment" method="post">
+							<form action="admin-book-appointment" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Job Type</label> <select
@@ -500,8 +497,6 @@ if (session.getAttribute("email") == null) {
 
 									</div>
 
-
-
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Date</label> <input type="date" name=""
 											id="" class="form-control" />
@@ -513,7 +508,7 @@ if (session.getAttribute("email") == null) {
 
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Appointment User</label> <select
-											class="form-control" id="appUser" name="jobType">
+											class="form-control" id="appUser" name="appUser">
 											<option></option>
 											<option value="1">Asanka Yaparathna</option>
 											<option value="2">Teacher</option>
