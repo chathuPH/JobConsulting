@@ -623,73 +623,100 @@ if (session.getAttribute("email") == null) {
 	<script src="assets/vendor/alert/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 	<script>
-				var status = '<%=session.getAttribute("status")%>';
-				var massage = '<%=session.getAttribute("massage")%>';
-				const value = sessionStorage.getItem('indexKey');
+		
+		const currentURL = window.location.href;
+		const protocol = window.location.protocol;
+		const host = window.location.host;
+		const hostUrl = protocol+"//"+host+"/JobConsulting";
 
-				if (status != null && status == "false" && value == null) {
-					swal("Error!", massage, "error");
-					sessionStorage.setItem('indexKey', 1);
-				} else if (status != null && status == "true" && value == null) {
-					swal("Success!", massage, "success");
-					sessionStorage.setItem('indexKey', 1);
+				
+		var status = '<%=session.getAttribute("status")%>';
+		var massage = '<%=session.getAttribute("massage")%>';
+		const value = sessionStorage.getItem('indexKey');
+
+		if (status != null && status == "false" && value == null) {
+			swal("Error!", massage, "error");
+			sessionStorage.setItem('indexKey', 1);
+		} else if (status != null && status == "true" && value == null) {
+			swal("Success!", massage, "success");
+			sessionStorage.setItem('indexKey', 1);
+		}
+
+
+		function Logout() {
+			sessionStorage.clear();
+		}
+
+		LoadUserDiv();
+
+		function LoadUserDiv() {
+			if (status != null && status == "true") {
+				const logedUserType = "<%=session.getAttribute("userType")%>";
+
+				var normal = document.getElementById("normalUser");
+				var admin = document.getElementById("adminUser");
+				var consult = document.getElementById("ConsultUser");
+
+				if (logedUserType == "Normal User") {
+					normal.style.display = "block";
+					admin.style.display = "none";
+					consult.style.display = "none";
 				}
-
-
-				function Logout() {
-					sessionStorage.clear();
+				if (logedUserType == "Consultant") {
+					normal.style.display = "none";
+					consult.style.display = "block";
+					admin.style.display = "none";
 				}
-
-				LoadUserDiv();
-
-				function LoadUserDiv() {
-
-					if (status != null && status == "true") {
-						const logedUserType = "<%=session.getAttribute("userType")%>";
-
-						var normal = document.getElementById("normalUser");
-						var admin = document.getElementById("adminUser");
-						var consult = document.getElementById("ConsultUser");
-
-						if (logedUserType == "Normal User") {
-							normal.style.display = "block";
-							admin.style.display = "none";
-							consult.style.display = "none";
-						}
-						if (logedUserType == "Consultant") {
-							normal.style.display = "none";
-							consult.style.display = "block";
-							admin.style.display = "none";
-						}
-						if (logedUserType == "Admin") {
-							normal.style.display = "none";
-							admin.style.display = "block";
-							consult.style.display = "none";
-						}
-					}
-
+				if (logedUserType == "Admin") {
+					normal.style.display = "none";
+					admin.style.display = "block";
+					consult.style.display = "none";
 				}
-				LoadJobType();
-				function LoadJobType(){
-					debugger;
-					fetch('http://localhost:7590/JobConsulting/get-job-type')
-		            .then(response => response.json()) // Assuming the response is JSON
-		            .then(data => {
-		                const jobTypeSelect = document.getElementById('jobTypeSelect');
+			}
 
-						debugger;
-		                data.forEach(jobType => {
-		                    const option = document.createElement('option');
-		                    option.value = jobType.id;
-		                    option.textContent = jobType.name;
-		                    jobTypeSelect.appendChild(option);
-		                });
-		            })
-		            .catch(error => {
-		                console.log('Error:', error);
+		}
+		
+		LoadJobType();
+		function LoadJobType1(){
+			debugger;
+			const jobtypeUrl = hostUrl+'/get-job-type';
+			fetch(jobtypeUrl)
+            .then(response => response.json()) 
+            .then(data => {
+                const jobTypeSelect = document.getElementById('jobTypeSelect');
+
+				debugger;
+                data.forEach(jobType => {
+                    const option = document.createElement('option');
+                    option.value = jobType.id;
+                    option.textContent = jobType.name;
+                    jobTypeSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
+
+		}
+		function LoadJobType() {
+		    const jobtypeUrl = hostUrl + '/get-job-type';
+		    fetch(jobtypeUrl)
+		        .then(response => response.json())
+		        .then(data => {
+		        	debugger;
+		            const jobTypeSelect = document.getElementById('jobTypeSelect');
+		            data.jobTypeList.forEach(jobType => { // Assuming "jobTypeList" is the key used in the attribute
+		                const option = document.createElement('option');
+		                option.value = jobType.id;
+		                option.textContent = jobType.name;
+		                jobTypeSelect.appendChild(option);
 		            });
-
-				}
+		        })
+		        .catch(error => {
+		        	debugger;
+		            console.log('Error:', error);
+		        });
+		}
 
 			</script>
 

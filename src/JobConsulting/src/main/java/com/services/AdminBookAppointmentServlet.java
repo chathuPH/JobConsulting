@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.connection.AppointmentBA;
 import com.model.AppointmentModel;
@@ -30,13 +29,9 @@ public class AdminBookAppointmentServlet extends HttpServlet {
 		int conId = Integer.parseInt(request.getParameter("consultant"));
 		int userId = Integer.parseInt(request.getParameter("appUser"));
 	
-		
 		RequestDispatcher dispatcher = null;
 		
 		try {
-
-			HttpSession session = request.getSession();
-			
 			AppointmentModel model = new AppointmentModel( 0, jobId, userId,conId, date,time);
 			AppointmentBA modelBA = new AppointmentBA();
 				
