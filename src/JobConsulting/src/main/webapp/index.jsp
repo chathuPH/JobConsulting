@@ -90,13 +90,9 @@ if (session.getAttribute("email") == null) {
 							<form action="book-appointment" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Job Type</label> <select
-											class="form-control" id="jobType" name="jobType">
-											<option></option>
-											<option value="1">Software Engineer</option>
-											<option value="2">Teacher</option>
-											<option value="3">Doctor</option>
-										</select>
+										<label class="mb-2">Job Type</label> 
+										
+										<select id="jobTypeSelect" name="jobTypeSelect" class="form-control"></select> 
 
 									</div>
 									<div class="col-sm-6 mb-2">
@@ -105,26 +101,8 @@ if (session.getAttribute("email") == null) {
 											<option></option>
 											<option value="1">Bob Harizon</option>
 											<option value="2">John Smith</option>
-										</select> <select class="form-control" id="jobTypeSelect"
-											name="jobTypeSelect">
-											<%
-											List<JobTypeModel> jobTypes = (List<JobTypeModel>) request.getAttribute("jobType");
-											if (jobTypes != null) {
-												for (JobTypeModel jobType : jobTypes) {
-											%>
-											<option value="<%=jobType.getId()%>"><%=jobType.getName()%></option>
-											<%
-											}
-											}
-											%>
-										</select> <select id="jobTypeSelect" name="jobTypeSelect">
-											<!-- Options will be inserted here -->
-										</select> <select id="jobTypeSelect">
-											<c:forEach var="jobType" items="${jobTypeList}">
-												<option value="${jobType.id}">${jobType.name}</option>
-											</c:forEach>
-										</select>
-
+										</select> 
+									
 
 									</div>
 
@@ -232,14 +210,9 @@ if (session.getAttribute("email") == null) {
 									</div>
 
 									<div class="col-sm-12 mb-2">
-										<label class="mb-2">Job Type</label> <select
-											class="form-control" id="exampleFormControlSelect1"
-											name="jobType">
-											<option></option>
-											<option value="1">Software Engineer</option>
-											<option value="2">Teacher</option>
-											<option value="3">Doctor</option>
-										</select>
+										<label class="mb-2">Job Type</label> 
+										<select id="jobTypeSelect2" name="jobTypeSelect" class="form-control">
+										</select> 
 									</div>
 
 									<div class="col-sm-6 mb-2">
@@ -383,14 +356,9 @@ if (session.getAttribute("email") == null) {
 											</div>
 
 											<div class="col-sm-6 mb-2">
-												<label class="mb-2">Job Type</label> <select
-													class="form-control" id="exampleFormControlSelect1"
-													name="jobType">
-													<option></option>
-													<option value="1">Software Engineer</option>
-													<option value="2">Teacher</option>
-													<option value="3">Doctor</option>
-												</select>
+												<label class="mb-2">Job Type</label> 
+												<select id="jobTypeSelect3" name="jobTypeSelect" class="form-control">
+												</select> 
 											</div>
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Consultant</label> <select
@@ -478,14 +446,8 @@ if (session.getAttribute("email") == null) {
 							<form action="admin-book-appointment" method="post">
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Job Type</label> <select
-											class="form-control" id="jobType" name="jobType">
-											<option></option>
-											<option value="1">Software Engineer</option>
-											<option value="2">Teacher</option>
-											<option value="3">Doctor</option>
-										</select>
-
+										<label class="mb-2">Job Type</label> 
+										<select id="jobTypeSelect4" name="jobTypeSelect" class="form-control"></select> 
 									</div>
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Consultant</label> <select
@@ -699,24 +661,64 @@ if (session.getAttribute("email") == null) {
 
 		}
 		function LoadJobType() {
-		    const jobtypeUrl = hostUrl + '/get-job-type';
-		    fetch(jobtypeUrl)
-		        .then(response => response.json())
-		        .then(data => {
-		        	debugger;
-		            const jobTypeSelect = document.getElementById('jobTypeSelect');
-		            data.jobTypeList.forEach(jobType => { // Assuming "jobTypeList" is the key used in the attribute
-		                const option = document.createElement('option');
-		                option.value = jobType.id;
-		                option.textContent = jobType.name;
-		                jobTypeSelect.appendChild(option);
-		            });
-		        })
-		        .catch(error => {
-		        	debugger;
-		            console.log('Error:', error);
-		        });
+			const jobtypeUrl = hostUrl+'/get-job-type';
+			
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", jobtypeUrl, true);
+
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+
+	            	debugger;
+		            if (xhr.status === 200) {
+		            	debugger;
+		                const data = JSON.parse(xhr.responseText);
+
+		                const jobTypeSelect = document.getElementById("jobTypeSelect");
+		                const jobTypeSelect2 = document.getElementById("jobTypeSelect2");
+		                const jobTypeSelect3 = document.getElementById("jobTypeSelect3");
+		                const jobTypeSelect4 = document.getElementById("jobTypeSelect4");
+		                
+		                jobTypeSelect.innerHTML = ''; 
+		                jobTypeSelect2.innerHTML = ''; 
+		                jobTypeSelect3.innerHTML = ''; 
+		                jobTypeSelect4.innerHTML = ''; 
+
+		                data.forEach(jobType => {
+		                    const option1 = document.createElement('option');
+		                    option1.value = jobType.id;
+		                    option1.textContent = jobType.name;
+		                    
+		                    const option2 = document.createElement('option');
+		                    option2.value = jobType.id;
+		                    option2.textContent = jobType.name;
+		                    
+		                    const option3 = document.createElement('option');
+		                    option3.value = jobType.id;
+		                    option3.textContent = jobType.name;
+		                    
+		                    const option4 = document.createElement('option');
+		                    option4.value = jobType.id;
+		                    option4.textContent = jobType.name;
+		                    
+		                    jobTypeSelect.appendChild(option1);
+		                    jobTypeSelect2.appendChild(option2);
+		                    jobTypeSelect3.appendChild(option3);
+		                    jobTypeSelect4.appendChild(option4);
+		                });
+		                
+		                
+		            } else {
+
+		            	debugger;
+		                console.log('Request failed with status:', xhr.status);
+		            }
+		        }
+		    };
+
+		    xhr.send();
 		}
+
 
 			</script>
 

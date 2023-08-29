@@ -24,8 +24,7 @@ public class BookAppointmentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String date = request.getParameter("date");
 		String time = request.getParameter("time");
-		System.out.println(request.getParameter("consultant"));
-		int jobId = Integer.parseInt(request.getParameter("jobType"));
+		int jobId = Integer.parseInt(request.getParameter("jobTypeSelect"));
 		int conId = Integer.parseInt(request.getParameter("consultant"));
 		int userId = 0;
 	
