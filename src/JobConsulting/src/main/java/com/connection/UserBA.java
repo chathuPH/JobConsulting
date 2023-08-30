@@ -88,5 +88,28 @@ public class UserBA {
 		return responseModel;
 
 	}
+	
+	
+	public int DeleteUser(int id) {
+	    int rowCount = -1;
+
+	    try {
+	        DataAccess dataAccess = new DataAccess();
+	        dataAccess.LoadDriver();
+	        Connection con = dataAccess.GetConnecion();
+
+	        String query = "DELETE FROM JOC_USERS WHERE US_ID = ?";
+	        PreparedStatement pst = con.prepareStatement(query);
+
+	        pst.setInt(1, id);
+
+	        rowCount = pst.executeUpdate();
+	        con.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return rowCount;
+	}
 
 }

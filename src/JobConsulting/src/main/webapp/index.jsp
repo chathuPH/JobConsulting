@@ -19,6 +19,7 @@ if (session.getAttribute("email") == null) {
 <meta content="" name="description">
 <meta content="" name="keywords">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -43,6 +44,7 @@ if (session.getAttribute("email") == null) {
 <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
 <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -76,7 +78,6 @@ if (session.getAttribute("email") == null) {
 		<div id="normalUser" style="display: none; min-height: 580px">
 			<section id="about" class="about mt-5">
 				<div class="container" data-aos="fade-up">
-
 					<div class="row content">
 						<div class="col-lg-6">
 							<div class="section-title">
@@ -92,20 +93,12 @@ if (session.getAttribute("email") == null) {
 								<div class="form-group row">
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Job Type</label> 
-										
 										<select id="jobTypeSelect" name="jobTypeSelect" class="form-control"></select> 
-
 									</div>
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Consultant</label> 
-										
 										<select id="consultant" name="consultant" class="form-control"></select>
-									
-
 									</div>
-
-
-
 									<div class="col-sm-6 mb-2">
 										<label class="mb-2">Date</label> <input type="date" name="date"
 											id="" class="form-control" />
@@ -114,22 +107,18 @@ if (session.getAttribute("email") == null) {
 										<label class="mb-2">Time</label> <input type="time" name="time"
 											id="" class="form-control" />
 									</div>
-
 									<div class="col-sm-6 mb-2">
 										<button type="clear" class="btn btn-danger mb-2 col-sm-12">Clear</button>
 									</div>
-
 									<div class="col-sm-6 mb-2">
 										<button type="submit" class="btn btn-primary col-sm-12 mb-2">Book
 											Appointment</button>
 									</div>
 								</div>
-
 							</form>
 						</div>
 						</div>
 					</div>
-
 				</div>
 			</section>
 
@@ -140,7 +129,6 @@ if (session.getAttribute("email") == null) {
 						<p>Appointment List</p>
 					</div>
 					<div class="row no-gutters">
-
 						<div class="col-lg-12 col-md-6 d-md-flex align-items-md-stretch">
 							<table class="table table-hover">
 								<thead>
@@ -157,13 +145,9 @@ if (session.getAttribute("email") == null) {
 								<tbody id="appList"></tbody>
 							</table>
 						</div>
-
-
 					</div>
-
 				</div>
 			</section>
-
 		</div>
 
 		<!-- Consultant User Area -->
@@ -274,7 +258,7 @@ if (session.getAttribute("email") == null) {
 								<div class="section-title mt-4">
 									<h2>Consultant Available Time</h2>
 								</div>
-								<div class="col-lg-6">
+								<div class="col-lg-4">
 									<form action="admin-add-consult" method="post">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-2">
@@ -296,11 +280,8 @@ if (session.getAttribute("email") == null) {
 												<select id="consultant2" name="conUser" class="form-control"></select>
 									
 											</div>
-											<div class="col-sm-6 mb-2">
-												<button type="clear" class="btn btn-danger mb-2 col-sm-12">Clear</button>
-											</div>
 
-											<div class="col-sm-6 mb-2">
+											<div class="col-sm-12 mb-2">
 												<button type="submit" class="btn btn-primary col-sm-12 mb-2">Set
 													Available Time</button>
 											</div>
@@ -308,47 +289,19 @@ if (session.getAttribute("email") == null) {
 
 									</form>
 								</div>
-								<div class="col-lg-6 pt-4 pt-lg-0">
-
-
+								<div class="col-lg-8 pt-4 pt-lg-0">
 									<table class="table table-hover">
 										<thead>
 											<tr>
 												<th scope="col">#</th>
 												<th scope="col">Job Type</th>
-												<th scope="col">Consultant</th>
 												<th scope="col">Date</th>
 												<th scope="col">Time</th>
+												<th scope="col">Consultant</th>
 												<th scope="col">Action</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<td>Software Engineering</td>
-												<td>Bob Harizon</td>
-												<td>28/08/2023</td>
-												<td>8.30 PM</td>
-												<td>
-													<button type="button" class="btn btn-outline-danger">
-														<i class="ri-delete-bin-line"></i>
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Doctor</td>
-												<td>Bob Harizon</td>
-												<td>28/08/2023</td>
-												<td>10.30 PM</td>
-												<td>
-													<button type="button" class="btn btn-outline-danger">
-														<i class="ri-delete-bin-line"></i>
-													</button>
-												</td>
-											</tr>
-
-										</tbody>
+										<tbody id="tbodyConList2"></tbody>
 									</table>
 								</div>
 							</div>
@@ -360,105 +313,164 @@ if (session.getAttribute("email") == null) {
 
 			<section id="counts" class="counts">
 				<div class="container" data-aos="fade-up">
-
 					<div class="row no-gutters">
-
 						<div class="card">
 							<div class="row content mt-4">
 								<div class="section-title">
 									<h2>All Booking</h2>
 								</div>
-								
-								<div class="col-lg-6 pt-4 pt-lg-0">
-							<form action="admin-book-appointment" method="post">
-								<div class="form-group row">
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Job Type</label> 
-										<select id="jobTypeSelect4" name="jobTypeSelect" class="form-control"></select> 
-									</div>
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Consultant</label> 
-										<select id="consultant3" name="consultant" class="form-control"></select>
-									</div>
-
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Date</label> <input type="date" name="date"
-											id="" class="form-control" />
-									</div>
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Time</label> <input type="time" name="time"
-											id="" class="form-control" />
-									</div>
-
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Appointment User</label> 
-										<select id="user1" name="appUser" class="form-control"></select>
-									
-										
-									</div>
-
-									<div class="col-sm-6 mb-2">
-										<label class="mb-2"></label>
-										<button type="submit"
-											class="btn btn-primary col-sm-12 mb-2 mt-1">Book
-											Appointment</button>
-									</div>
+								<div class="col-lg-4 pt-4 pt-lg-0">
+									<form action="admin-book-appointment" method="post">
+										<div class="form-group row">
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Job Type</label> 
+												<select id="jobTypeSelect4" name="jobTypeSelect" class="form-control"></select> 
+											</div>
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Consultant</label> 
+												<select id="consultant3" name="consultant" class="form-control"></select>
+											</div>
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Date</label> <input type="date" name="date"
+													id="" class="form-control" />
+											</div>
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Time</label> <input type="time" name="time"
+													id="" class="form-control" />
+											</div>
+											<div class="col-sm-12 mb-2">
+												<label class="mb-2">Appointment User</label> 
+												<select id="user1" name="appUser" class="form-control"></select>
+											</div>
+											<div class="col-sm-12 mb-2">
+												<label class="mb-2"></label>
+												<button type="submit"
+													class="btn btn-primary col-sm-12 mb-2 mt-1">Book
+													Appointment</button>
+											</div>
+										</div>
+									</form>
 								</div>
 
-							</form>
-						</div>
-
-						<div class="col-lg-6 pt-4 pt-lg-0">
-
-
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Name</th>
-										<th scope="col">Job Type</th>
-										<th scope="col">Date</th>
-										<th scope="col">Time</th>
-										<th scope="col">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Asanka</td>
-										<td>Software Engineering</td>
-										<td>28/08/2023</td>
-										<td>8.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td>Smith</td>
-										<td>Doctor</td>
-										<td>28/08/2023</td>
-										<td>10.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-
-								</tbody>
-							</table>
-						</div>
-								
+								<div class="col-lg-8 pt-4 pt-lg-0">
+									<table class="table table-hover" id="rp-booking">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Name</th>
+												<th scope="col">Job Type</th>
+												<th scope="col">Date</th>
+												<th scope="col">Time</th>
+												<th scope="col">Status</th>
+												<th scope="col">Action</th>
+											</tr>
+										</thead>
+										<tbody id="appList3"></tbody>
+									</table>
+									
+									<div class="col-sm-12 mb-2">
+										<div class="row">
+											<div class="col-6"></div>
+											<div class="col-6">
+												<button type="submit"
+													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateBooking()">Generate Report 
+												</button>
+											</div>
+										</div>
+									</div>
+									
+								</div>	
 							</div>
 						</div>
-
-
-
 					</div>
+				</div>
+			</section>
+			
+			<section id="counts" class="counts">
+				<div class="container" data-aos="fade-up">
+					<div class="row no-gutters">
+						<div class="card">
+							<div class="row content mt-4">
+								<div class="section-title">
+									<h2>All Users</h2>
+								</div>
+								<div class="col-lg-4 pt-4 pt-lg-0">
+									<form action="register" method="post">
+										<div class="form-group row">
+										
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Name</label> 
+												<input class="form-control" name="name" required/> 
+											</div>
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Email</label> 
+												<input class="form-control" name="email" required/> 
+											</div>
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Password</label> 
+												<input class="form-control" name="password" required/> 
+											</div>
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Confirm Password</label> 
+												<input class="form-control" name="cpassword" required/> 
+											</div>
+											
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">User Type</label> 
+												<select class="form-select form-select-sm"
+													name="userType" aria-label=".form-select-sm example">
+													<option selected>Select User Type</option>
+													<option value="Normal User">Normal User</option>
+													<option value="Consultant">Consultant</option>
+												</select>
+											</div>
+											
+											<div class="col-sm-6 mb-2">
+												<label class="mb-2">Contact no</label> 
+												<input class="form-control" name="contact" /> 
+											</div>
+											<div class="col-sm-12 mb-2">
+												<label class="mb-2"></label>
+												<button type="submit"
+													class="btn btn-primary col-sm-12 mb-2 mt-1">Add User
+													</button>
+											</div>
+										</div>
+									</form>
+								</div>
 
+								<div class="col-lg-8 pt-4 pt-lg-0">
+									<table class="table table-hover" id="rp-user">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Name</th>
+												<th scope="col">Email</th>
+												<th scope="col">User Type</th>
+												<th scope="col">Contact No</th>
+												<th scope="col">Action</th>
+											</tr>
+										</thead>
+										<tbody id="userList"></tbody>
+									</table>
+									
+									<div class="col-sm-12 mb-2">
+										<div class="row">
+											<div class="col-6"></div>
+											<div class="col-6">
+												<button type="submit"
+													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateUser()">Generate Report 
+												</button>
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 		</div>
@@ -482,7 +494,6 @@ if (session.getAttribute("email") == null) {
 	<a href="#"
 		class="back-to-top d-flex align-items-center justify-content-center"><i
 		class="bi bi-arrow-up-short"></i></a>
-
 	<!-- Vendor JS Files -->
 	<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
 	<script src="assets/vendor/aos/aos.js"></script>
@@ -491,6 +502,7 @@ if (session.getAttribute("email") == null) {
 	<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 	<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 	<script src="assets/vendor/php-email-form/validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
@@ -526,6 +538,7 @@ if (session.getAttribute("email") == null) {
 		LoadConsultUser();
 		LoadApointmentList();
 		LoadConsultTime();
+		LoadUserList();
 
 		function LoadUserDiv() {
 			if (status != null && status == "true") {
@@ -681,15 +694,19 @@ if (session.getAttribute("email") == null) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
 		                
-		                const tableBody  = document.getElementById("appList");
-		                const tableBody2  = document.getElementById("appList2");
 		                
+		                const tableBody  = document.getElementById("appList");
 		                tableBody.innerHTML = '';
+		                
+		                const tableBody2  = document.getElementById("appList2");
 		                tableBody2.innerHTML = '';
+		                
+
+		                const tableBody3  = document.getElementById("appList3");
+		                tableBody3.innerHTML = '';
 		                
 		                data.forEach((application, index) => {
 		                    const row = document.createElement("tr");
-		                    const row2 = document.createElement("tr");
 		                    
 		                    const indexCell = document.createElement("td");
 		                    indexCell.textContent = index + 1;
@@ -726,8 +743,11 @@ if (session.getAttribute("email") == null) {
 		                    });
 		                    actionCell.appendChild(deleteButton);
 		                    row.appendChild(actionCell);
+		                    tableBody.appendChild(row);
 		                    
 		                    //row2
+		                    const row2 = document.createElement("tr");
+		                    
 		                    const indexCell2 = document.createElement("td");
 		                    indexCell2.textContent = index + 1;
 		                    row2.appendChild(indexCell2);
@@ -765,9 +785,116 @@ if (session.getAttribute("email") == null) {
 		                    });
 		                    actionCell2.appendChild(deleteButton2);
 		                    row2.appendChild(actionCell2);
+		                    tableBody2.appendChild(row2);
+		                    
+		                  	//row3
+		                    const row3 = document.createElement("tr");
+		                    
+		                    const indexCell3 = document.createElement("td");
+		                    indexCell3.textContent = index + 1;
+		                    row3.appendChild(indexCell3);
+
+		                    const consultCell3 = document.createElement("td");
+		                    consultCell3.textContent = application.appUserName;
+		                    row3.appendChild(consultCell3);
+		                    
+		                    const jobTypeCell3 = document.createElement("td");
+		                    jobTypeCell3.textContent = application.jobName;
+		                    row3.appendChild(jobTypeCell3);
+
+		                    const dateCell3 = document.createElement("td");
+		                    dateCell3.textContent = application.date;
+		                    row3.appendChild(dateCell3);
+
+		                    const timeCell3 = document.createElement("td");
+		                    timeCell3.textContent = application.time;
+		                    row3.appendChild(timeCell3);
+		                    
+		                    const statusCell3 = document.createElement("td");
+		                    statusCell3.textContent = application.state;
+		                    row3.appendChild(statusCell3);
+		                    
+		                    const actionCell3 = document.createElement("td");
+		                    const deleteButton3 = document.createElement("button");
+		                    deleteButton3.type = "button";
+		                    deleteButton3.classList.add("btn", "btn-outline-danger");
+		                    deleteButton3.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton3.addEventListener("click", function() {
+		                        const appId = application.appId;
+		                        deleteApplication(appId);
+		                    });
+		                    actionCell3.appendChild(deleteButton2);
+		                    row3.appendChild(actionCell3);
 		                    
 
-		                    tableBody2.appendChild(row2);
+		                    tableBody3.appendChild(row3);
+		                });
+		                
+		            } else {
+
+		            	debugger;
+		                console.log('Request failed with status:', xhr.status);
+		            }
+		        }
+		    };
+
+		    xhr.send();
+		}
+		
+		function LoadUserList() {
+			const jobtypeUrl = hostUrl+'/getUsers';
+			
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", jobtypeUrl, true);
+
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+		            if (xhr.status === 200) {
+		                const data = JSON.parse(xhr.responseText);
+		                
+		                
+		                const tableBody  = document.getElementById("userList");
+		                tableBody.innerHTML = '';
+		                
+
+		                
+		                data.forEach((application, index) => {
+		                    const row = document.createElement("tr");
+		                    
+		                    const indexCell = document.createElement("td");
+		                    indexCell.textContent = index + 1;
+		                    row.appendChild(indexCell);
+
+		                    const jobTypeCell = document.createElement("td");
+		                    jobTypeCell.textContent = application.name;
+		                    row.appendChild(jobTypeCell);
+
+		                    const consultCell = document.createElement("td");
+		                    consultCell.textContent = application.email;
+		                    row.appendChild(consultCell);
+
+		                    const dateCell = document.createElement("td");
+		                    dateCell.textContent = application.userType;
+		                    row.appendChild(dateCell);
+
+		                    const timeCell = document.createElement("td");
+		                    timeCell.textContent = application.mobile;
+		                    row.appendChild(timeCell);
+		                    
+		                    const actionCell = document.createElement("td");
+		                    const deleteButton = document.createElement("button");
+		                    deleteButton.type = "button";
+		                    deleteButton.classList.add("btn", "btn-outline-danger");
+		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton.addEventListener("click", function() {
+		                        const appId = application.id;
+		                        deleteUser(appId);
+		                    });
+		                    actionCell.appendChild(deleteButton);
+		                    row.appendChild(actionCell);
+		                    
+		                    tableBody.appendChild(row);
+		                    
 		                });
 		                
 		            } else {
@@ -806,6 +933,29 @@ if (session.getAttribute("email") == null) {
 		    });
 		}
 		
+		function deleteUser(appId) {
+			debugger;
+			const deleteUrl  = hostUrl+'/delete-user?appId='+appId;
+			fetch(deleteUrl, {
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/x-www-form-urlencoded'
+		        },
+		        body: 'appId='+appId
+		    })
+		    .then(response => {
+		    	debugger;
+		        if (response.status === 200) {
+		        	//window.location.reload();
+		        	LoadApointmentList();
+		        } else {
+		            console.log('Failed to delete application');
+		        }
+		    })
+		    .catch(error => {
+		        console.log('Error:', error);
+		    });
+		}
 		//get consult time
 		
 		function LoadConsultTime() {
@@ -820,13 +970,12 @@ if (session.getAttribute("email") == null) {
 		                const data = JSON.parse(xhr.responseText);
 		                
 		                const tableBody  = document.getElementById("tbodyConList");
-		                //const tableBody2  = document.getElementById("appList2");
-		                
 		                tableBody.innerHTML = '';
-		                //tableBody2.innerHTML = '';
+		                
+		                const tableBody2  = document.getElementById("tbodyConList2");
+	                	tableBody2.innerHTML = '';
 		                
 		                data.forEach((application, index) => {
-		                	console.log(application);
 		                    const row = document.createElement("tr");
 		                    
 		                    const indexCell = document.createElement("td");
@@ -837,10 +986,7 @@ if (session.getAttribute("email") == null) {
 		                    jobTypeCell.textContent = application.jobName;
 		                    row.appendChild(jobTypeCell);
 
-		                    const consultCell = document.createElement("td");
-		                    consultCell.textContent = application.conName;
-		                    row.appendChild(consultCell);
-
+		                  
 		                    const dateCell = document.createElement("td");
 		                    dateCell.textContent = application.conDate;
 		                    row.appendChild(dateCell);
@@ -862,19 +1008,14 @@ if (session.getAttribute("email") == null) {
 		                    row.appendChild(actionCell);
 		                    
 		                    tableBody.appendChild(row);
-		                    /*
-		                    //row2
 		                    
-		                    const row2 = document.createElement("tr");
+		                    //row2
+							const row2 = document.createElement("tr");
 		                    
 		                    const indexCell2 = document.createElement("td");
 		                    indexCell2.textContent = index + 1;
 		                    row2.appendChild(indexCell2);
 
-		                    const consultCell2 = document.createElement("td");
-		                    consultCell2.textContent = application.appUserName;
-		                    row2.appendChild(consultCell2);
-		                    
 		                    const jobTypeCell2 = document.createElement("td");
 		                    jobTypeCell2.textContent = application.jobName;
 		                    row2.appendChild(jobTypeCell2);
@@ -882,16 +1023,16 @@ if (session.getAttribute("email") == null) {
 		                    
 
 		                    const dateCell2 = document.createElement("td");
-		                    dateCell2.textContent = application.date;
+		                    dateCell2.textContent = application.conDate;
 		                    row2.appendChild(dateCell2);
 
 		                    const timeCell2 = document.createElement("td");
-		                    timeCell2.textContent = application.time;
+		                    timeCell2.textContent = application.conTime;
 		                    row2.appendChild(timeCell2);
-		                    
-		                    const statusCell2 = document.createElement("td");
-		                    statusCell2.textContent = application.state;
-		                    row2.appendChild(statusCell2);
+		                    		            
+		                    const consultCell2 = document.createElement("td");
+		                    consultCell2.textContent = application.conName;
+		                    row2.appendChild(consultCell2);
 		                    
 		                    const actionCell2 = document.createElement("td");
 		                    const deleteButton2 = document.createElement("button");
@@ -899,16 +1040,15 @@ if (session.getAttribute("email") == null) {
 		                    deleteButton2.classList.add("btn", "btn-outline-danger");
 		                    deleteButton2.innerHTML = '<i class="ri-delete-bin-line"></i>';
 		                    deleteButton2.addEventListener("click", function() {
-		                        const appId = application.appId;
-		                        deleteApplication(appId);
+		                        const appId = application.id;
+		                        deleteConsultTime(appId);
 		                    });
 		                    actionCell2.appendChild(deleteButton2);
 		                    row2.appendChild(actionCell2);
 		                    
-
 		                    tableBody2.appendChild(row2);
 		                    
-		                    */
+		                    
 		                });
 		                
 		            } else {
@@ -945,6 +1085,22 @@ if (session.getAttribute("email") == null) {
 		    .catch(error => {
 		        console.log('Error:', error);
 		    });
+		}
+		
+		function GenerateBooking() {
+			debugger;
+		    const doc = new jsPDF();
+		    const table = document.getElementById('rp-booking');
+		    doc.autoTable({ html: table });
+		    doc.save('report-booking.pdf');
+		}
+		
+		function GenerateUser() {
+			debugger;
+		    const doc = new jsPDF();
+		    const table = document.getElementById('rp-user');
+		    doc.autoTable({ html: table });
+		    doc.save('report-User.pdf');
 		}
 		
 	</script>
