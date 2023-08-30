@@ -44,7 +44,7 @@ public class ConsultBA {
 	        dataAccess.LoadDriver();
 	        Connection con = dataAccess.GetConnecion();
 
-	        String query = "SELECT * FROM JOC_CONSULTING";
+	        String query = "SELECT JC.*,JT.JOB_NAME,CUS.US_NAME FROM JOC_CONSULTING JC INNER JOIN JOC_JOB_TYPE JT ON JC.JOB_ID = JT.JOB_ID INNER JOIN JOC_USERS CUS ON JC.US_ID = CUS.US_ID;";
 	        PreparedStatement pst = con.prepareStatement(query);
 
 	        ResultSet rs = pst.executeQuery();
@@ -54,7 +54,9 @@ public class ConsultBA {
 	            int usId = rs.getInt("US_ID");
 	            String conDate = rs.getString("CON_DATE");
 	            String conTime = rs.getString("CON_TIME");
-	            ConsultModel consult = new ConsultModel(id, jobId, usId, conDate, conTime);
+	            String jobName = rs.getString("JOB_NAME");
+	            String conName = rs.getString("US_NAME");
+	            ConsultModel consult = new ConsultModel(id, jobId, usId, conDate, conTime,jobName,conName);
 	            responseModel.add(consult);
 	        }
 
@@ -65,9 +67,9 @@ public class ConsultBA {
 
 	    return responseModel;
 	}
-
-	public boolean DeleteConsultRecord(int recordId) {
-	    boolean deleted = false;
+	
+	public int DeleteConsultRecord(int recordId) {
+	    int rowCount = -1;
 
 	    try {
 	        DataAccess dataAccess = new DataAccess();
@@ -76,23 +78,16 @@ public class ConsultBA {
 
 	        String query = "DELETE FROM JOC_CONSULTING WHERE CON_ID = ?";
 	        PreparedStatement pst = con.prepareStatement(query);
+
 	        pst.setInt(1, recordId);
 
-	        int rowsAffected = pst.executeUpdate();
-
-	        if (rowsAffected > 0) {
-	            System.out.println("Consulting record with CON_ID " + recordId + " has been deleted.");
-	            deleted = true;
-	        } else {
-	            System.out.println("No consulting record found with CON_ID " + recordId);
-	        }
-
+	        rowCount = pst.executeUpdate();
 	        con.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 
-	    return deleted;
+	    return rowCount;
 	}
 
 

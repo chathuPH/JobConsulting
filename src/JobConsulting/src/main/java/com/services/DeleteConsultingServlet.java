@@ -1,41 +1,49 @@
 package com.services;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class DeleteConsultingServlet
- */
-@WebServlet("/DeleteConsultingServlet")
+import com.connection.ConsultBA;
+
+
+@WebServlet("/delete-consult-time")
 public class DeleteConsultingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public DeleteConsultingServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int appId = Integer.parseInt(request.getParameter("appId"));
+		RequestDispatcher dispatcher = null;
+		
+		try {
+			ConsultBA modelBA = new ConsultBA();
+				
+			int rowCount = modelBA.DeleteConsultRecord(appId);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+			dispatcher = request.getRequestDispatcher("index.jsp");
+			
+			if(rowCount > 0) {
+				request.setAttribute("status", true);
+			}else {
+				request.setAttribute("status", false);
+			}
+
+			dispatcher.forward(request, response);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

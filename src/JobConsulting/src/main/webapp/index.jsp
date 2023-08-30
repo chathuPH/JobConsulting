@@ -189,7 +189,7 @@ if (session.getAttribute("email") == null) {
 
 									<div class="col-sm-12 mb-2">
 										<label class="mb-2">Job Type</label> 
-										<select id="jobTypeSelect2" name="jobTypeSelect" class="form-control">
+										<select id="jobTypeSelect2" name="jobType" class="form-control">
 										</select> 
 									</div>
 
@@ -222,31 +222,7 @@ if (session.getAttribute("email") == null) {
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Software Engineering</td>
-										<td>28/08/2023</td>
-										<td>8.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td>Doctor</td>
-										<td>28/08/2023</td>
-										<td>10.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-
-								</tbody>
+								<tbody id="tbodyConList"></tbody>
 							</table>
 						</div>
 					</div>
@@ -271,37 +247,13 @@ if (session.getAttribute("email") == null) {
 										<th scope="col">Job Type</th>
 										<th scope="col">Date</th>
 										<th scope="col">Time</th>
+										<th scope="col">Status</th>
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Asanka</td>
-										<td>Software Engineering</td>
-										<td>28/08/2023</td>
-										<td>8.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td>Smith</td>
-										<td>Doctor</td>
-										<td>28/08/2023</td>
-										<td>10.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-
-								</tbody>
+								<tbody id="appList2"></tbody>
 							</table>
+							
 						</div>
 
 
@@ -573,6 +525,7 @@ if (session.getAttribute("email") == null) {
 		LoadJobType();
 		LoadConsultUser();
 		LoadApointmentList();
+		LoadConsultTime();
 
 		function LoadUserDiv() {
 			if (status != null && status == "true") {
@@ -728,13 +681,15 @@ if (session.getAttribute("email") == null) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
 		                
-
 		                const tableBody  = document.getElementById("appList");
+		                const tableBody2  = document.getElementById("appList2");
 		                
-		                tableBody.innerHTML = ''; // Clear existing table rows
-
+		                tableBody.innerHTML = '';
+		                tableBody2.innerHTML = '';
+		                
 		                data.forEach((application, index) => {
 		                    const row = document.createElement("tr");
+		                    const row2 = document.createElement("tr");
 		                    
 		                    const indexCell = document.createElement("td");
 		                    indexCell.textContent = index + 1;
@@ -766,13 +721,53 @@ if (session.getAttribute("email") == null) {
 		                    deleteButton.classList.add("btn", "btn-outline-danger");
 		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
 		                    deleteButton.addEventListener("click", function() {
-		                        const appId = application.appId; // Get the appId
+		                        const appId = application.appId;
 		                        deleteApplication(appId);
 		                    });
 		                    actionCell.appendChild(deleteButton);
 		                    row.appendChild(actionCell);
+		                    
+		                    //row2
+		                    const indexCell2 = document.createElement("td");
+		                    indexCell2.textContent = index + 1;
+		                    row2.appendChild(indexCell2);
 
-		                    tableBody.appendChild(row);
+		                    const consultCell2 = document.createElement("td");
+		                    consultCell2.textContent = application.appUserName;
+		                    row2.appendChild(consultCell2);
+		                    
+		                    const jobTypeCell2 = document.createElement("td");
+		                    jobTypeCell2.textContent = application.jobName;
+		                    row2.appendChild(jobTypeCell2);
+
+		                    
+
+		                    const dateCell2 = document.createElement("td");
+		                    dateCell2.textContent = application.date;
+		                    row2.appendChild(dateCell2);
+
+		                    const timeCell2 = document.createElement("td");
+		                    timeCell2.textContent = application.time;
+		                    row2.appendChild(timeCell2);
+		                    
+		                    const statusCell2 = document.createElement("td");
+		                    statusCell2.textContent = application.state;
+		                    row2.appendChild(statusCell2);
+		                    
+		                    const actionCell2 = document.createElement("td");
+		                    const deleteButton2 = document.createElement("button");
+		                    deleteButton2.type = "button";
+		                    deleteButton2.classList.add("btn", "btn-outline-danger");
+		                    deleteButton2.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton2.addEventListener("click", function() {
+		                        const appId = application.appId;
+		                        deleteApplication(appId);
+		                    });
+		                    actionCell2.appendChild(deleteButton2);
+		                    row2.appendChild(actionCell2);
+		                    
+
+		                    tableBody2.appendChild(row2);
 		                });
 		                
 		            } else {
@@ -802,6 +797,147 @@ if (session.getAttribute("email") == null) {
 		        if (response.status === 200) {
 		        	//window.location.reload();
 		        	LoadApointmentList();
+		        } else {
+		            console.log('Failed to delete application');
+		        }
+		    })
+		    .catch(error => {
+		        console.log('Error:', error);
+		    });
+		}
+		
+		//get consult time
+		
+		function LoadConsultTime() {
+			const jobtypeUrl = hostUrl+'/get-consult';
+			
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", jobtypeUrl, true);
+
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+		            if (xhr.status === 200) {
+		                const data = JSON.parse(xhr.responseText);
+		                
+		                const tableBody  = document.getElementById("tbodyConList");
+		                //const tableBody2  = document.getElementById("appList2");
+		                
+		                tableBody.innerHTML = '';
+		                //tableBody2.innerHTML = '';
+		                
+		                data.forEach((application, index) => {
+		                	console.log(application);
+		                    const row = document.createElement("tr");
+		                    
+		                    const indexCell = document.createElement("td");
+		                    indexCell.textContent = index + 1;
+		                    row.appendChild(indexCell);
+
+		                    const jobTypeCell = document.createElement("td");
+		                    jobTypeCell.textContent = application.jobName;
+		                    row.appendChild(jobTypeCell);
+
+		                    const consultCell = document.createElement("td");
+		                    consultCell.textContent = application.conName;
+		                    row.appendChild(consultCell);
+
+		                    const dateCell = document.createElement("td");
+		                    dateCell.textContent = application.conDate;
+		                    row.appendChild(dateCell);
+
+		                    const timeCell = document.createElement("td");
+		                    timeCell.textContent = application.conTime;
+		                    row.appendChild(timeCell);
+		                    		                    
+		                    const actionCell = document.createElement("td");
+		                    const deleteButton = document.createElement("button");
+		                    deleteButton.type = "button";
+		                    deleteButton.classList.add("btn", "btn-outline-danger");
+		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton.addEventListener("click", function() {
+		                        const appId = application.id;
+		                        deleteConsultTime(appId);
+		                    });
+		                    actionCell.appendChild(deleteButton);
+		                    row.appendChild(actionCell);
+		                    
+		                    tableBody.appendChild(row);
+		                    /*
+		                    //row2
+		                    
+		                    const row2 = document.createElement("tr");
+		                    
+		                    const indexCell2 = document.createElement("td");
+		                    indexCell2.textContent = index + 1;
+		                    row2.appendChild(indexCell2);
+
+		                    const consultCell2 = document.createElement("td");
+		                    consultCell2.textContent = application.appUserName;
+		                    row2.appendChild(consultCell2);
+		                    
+		                    const jobTypeCell2 = document.createElement("td");
+		                    jobTypeCell2.textContent = application.jobName;
+		                    row2.appendChild(jobTypeCell2);
+
+		                    
+
+		                    const dateCell2 = document.createElement("td");
+		                    dateCell2.textContent = application.date;
+		                    row2.appendChild(dateCell2);
+
+		                    const timeCell2 = document.createElement("td");
+		                    timeCell2.textContent = application.time;
+		                    row2.appendChild(timeCell2);
+		                    
+		                    const statusCell2 = document.createElement("td");
+		                    statusCell2.textContent = application.state;
+		                    row2.appendChild(statusCell2);
+		                    
+		                    const actionCell2 = document.createElement("td");
+		                    const deleteButton2 = document.createElement("button");
+		                    deleteButton2.type = "button";
+		                    deleteButton2.classList.add("btn", "btn-outline-danger");
+		                    deleteButton2.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton2.addEventListener("click", function() {
+		                        const appId = application.appId;
+		                        deleteApplication(appId);
+		                    });
+		                    actionCell2.appendChild(deleteButton2);
+		                    row2.appendChild(actionCell2);
+		                    
+
+		                    tableBody2.appendChild(row2);
+		                    
+		                    */
+		                });
+		                
+		            } else {
+
+		            	debugger;
+		                console.log('Request failed with status:', xhr.status);
+		            }
+		        }
+		    };
+
+		    xhr.send();
+		}
+
+		
+		function deleteConsultTime(appId) {
+			debugger;
+			const deleteUrl  = hostUrl+'/delete-consult-time?appId='+appId;
+			fetch(deleteUrl, {
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/x-www-form-urlencoded'
+		        },
+		        body: 'appId='+appId
+		    })
+		    .then(response => {
+		    	debugger;
+		        if (response.status === 200) {
+		        	//window.location.reload();
+		        	LoadConsultTime();
 		        } else {
 		            console.log('Failed to delete application');
 		        }

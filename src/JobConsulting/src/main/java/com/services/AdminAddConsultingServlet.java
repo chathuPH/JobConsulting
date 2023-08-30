@@ -38,7 +38,7 @@ public class AdminAddConsultingServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 
-			ConsultModel model = new ConsultModel( 0, jobId, userId, date,time);
+			ConsultModel model = new ConsultModel( 0, jobId, userId, date,time,"","");
 			ConsultBA userBA = new ConsultBA();
 				
 				int rowCount = userBA.CreateConsultRecord(model);
