@@ -55,7 +55,7 @@ if (session.getAttribute("email") == null) {
 			class="container d-flex align-items-center justify-content-between">
 
 			<h1 class="logo">
-				<a href="index.html">Job Consulting</a>
+				<a href="index.html"><span id="headerText">Job Consulting</span></a> 
 			</h1>
 			<nav id="navbar" class="navbar">
 				<ul>
@@ -80,9 +80,7 @@ if (session.getAttribute("email") == null) {
 				<div class="container" data-aos="fade-up">
 					<div class="row content">
 						<div class="col-lg-6">
-							<div class="section-title">
-								<p>User Home Page</p>
-							</div>
+							
 						</div>
 						<div class="col-lg-6 pt-4 pt-lg-0">
 						<div class="card p-2 mt-5">
@@ -519,6 +517,8 @@ if (session.getAttribute("email") == null) {
 		var status = '<%=session.getAttribute("status")%>';
 		var massage = '<%=session.getAttribute("massage")%>';
 		const value = sessionStorage.getItem('indexKey');
+		
+		var headerText = document.getElementById("headerText");
 
 		if (status != null && status == "false" && value == null) {
 			swal("Error!", massage, "error");
@@ -536,7 +536,7 @@ if (session.getAttribute("email") == null) {
 		LoadUserDiv();
 		LoadJobType();
 		LoadConsultUser();
-		LoadApointmentList();
+		LoadAppointmentList();
 		LoadConsultTime();
 		LoadUserList();
 
@@ -544,32 +544,33 @@ if (session.getAttribute("email") == null) {
 			if (status != null && status == "true") {
 				const logedUserType = "<%=session.getAttribute("userType")%>";
 
-				var normal = document.getElementById("normalUser");
-				var admin = document.getElementById("adminUser");
-				var consult = document.getElementById("ConsultUser");
+				const normal = document.getElementById("normalUser");
+			    const admin = document.getElementById("adminUser");
+			    const consult = document.getElementById("ConsultUser");
+			    const headerText = document.getElementById("headerText");
 
-				if (logedUserType == "Normal User") {
-					normal.style.display = "block";
-					admin.style.display = "none";
-					consult.style.display = "none";
-				}
-				if (logedUserType == "Consultant") {
-					normal.style.display = "none";
-					consult.style.display = "block";
-					admin.style.display = "none";
-				}
-				if (logedUserType == "Admin") {
-					normal.style.display = "none";
-					admin.style.display = "block";
-					consult.style.display = "none";
-				}
+			    normal.style.display = "none";
+			    admin.style.display = "none";
+			    consult.style.display = "none";
+
+			    if (status != null && status == "true") {
+			        if (logedUserType === "Normal User") {
+			            normal.style.display = "block";
+			            headerText.innerHTML = 'JOB SEEKER HOME PAGE';
+			        } else if (logedUserType === "Consultant") {
+			            consult.style.display = "block";
+			            headerText.innerHTML = 'CONSULTANT HOME PAGE';
+			        } else if (logedUserType === "Admin") {
+			            admin.style.display = "block";
+			            headerText.innerHTML = 'ADMIN HOME PAGE';
+			        }
+			    }
 			}
-
 		}
 		
 		function LoadJobType() {
-			const jobtypeUrl = hostUrl+'/get-job-type';
-			
+		    const jobtypeUrl = hostUrl + '/get-job-type';
+
 		    var xhr = new XMLHttpRequest();
 		    xhr.open("GET", jobtypeUrl, true);
 
@@ -578,42 +579,25 @@ if (session.getAttribute("email") == null) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
 
-		                const jobTypeSelect = document.getElementById("jobTypeSelect");
-		                const jobTypeSelect2 = document.getElementById("jobTypeSelect2");
-		                const jobTypeSelect3 = document.getElementById("jobTypeSelect3");
-		                const jobTypeSelect4 = document.getElementById("jobTypeSelect4");
-		                
-		                jobTypeSelect.innerHTML = ''; 
-		                jobTypeSelect2.innerHTML = ''; 
-		                jobTypeSelect3.innerHTML = ''; 
-		                jobTypeSelect4.innerHTML = ''; 
+		                const jobTypeSelectElements = [
+		                    document.getElementById("jobTypeSelect"),
+		                    document.getElementById("jobTypeSelect2"),
+		                    document.getElementById("jobTypeSelect3"),
+		                    document.getElementById("jobTypeSelect4")
+		                ];
+
+		                jobTypeSelectElements.forEach(jobTypeSelect => {
+		                    jobTypeSelect.innerHTML = '';
+		                });
 
 		                data.forEach(jobType => {
-		                    const option1 = document.createElement('option');
-		                    option1.value = jobType.id;
-		                    option1.textContent = jobType.name;
-		                    
-		                    const option2 = document.createElement('option');
-		                    option2.value = jobType.id;
-		                    option2.textContent = jobType.name;
-		                    
-		                    const option3 = document.createElement('option');
-		                    option3.value = jobType.id;
-		                    option3.textContent = jobType.name;
-		                    
-		                    const option4 = document.createElement('option');
-		                    option4.value = jobType.id;
-		                    option4.textContent = jobType.name;
-		                    
-		                    jobTypeSelect.appendChild(option1);
-		                    jobTypeSelect2.appendChild(option2);
-		                    jobTypeSelect3.appendChild(option3);
-		                    jobTypeSelect4.appendChild(option4);
+		                    const option = createOption(jobType.id, jobType.name);
+		                    jobTypeSelectElements.forEach(jobTypeSelect => {
+		                        jobTypeSelect.appendChild(option.cloneNode(true));
+		                    });
 		                });
-		                
 		            } else {
-
-		            	debugger;
+		                debugger;
 		                console.log('Request failed with status:', xhr.status);
 		            }
 		        }
@@ -622,9 +606,18 @@ if (session.getAttribute("email") == null) {
 		    xhr.send();
 		}
 
+		
+
+		function createOption(value, text) {
+		    const option = document.createElement('option');
+		    option.value = value;
+		    option.textContent = text;
+		    return option;
+		}
+		
 		function LoadConsultUser() {
-			const jobtypeUrl = hostUrl+'/getUsers';
-			
+		    const jobtypeUrl = hostUrl + '/getUsers';
+
 		    var xhr = new XMLHttpRequest();
 		    xhr.open("GET", jobtypeUrl, true);
 
@@ -633,47 +626,30 @@ if (session.getAttribute("email") == null) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
 
-		                const selectConsult = document.getElementById("consultant");
-		                const selectConsult2 = document.getElementById("consultant2");
-		                const selectConsult3 = document.getElementById("consultant3");
+		                const selectConsultElements = [
+		                    document.getElementById("consultant"),
+		                    document.getElementById("consultant2"),
+		                    document.getElementById("consultant3")
+		                ];
+
 		                const user1 = document.getElementById("user1");
-		                
-		                selectConsult.innerHTML = ''; 
-		                selectConsult2.innerHTML = ''; 
-		                selectConsult3.innerHTML = ''; 
+
+		                selectConsultElements.forEach(selectConsult => {
+		                    selectConsult.innerHTML = '';
+		                });
 		                user1.innerHTML = '';
 
 		                data.forEach(dt => {
-		                	if(dt.userType == "Consultant"){
-		                		const option1 = document.createElement('option');
-			                    option1.value = dt.id;
-			                    option1.textContent = dt.name;
-			                    
-
-		                		const option2 = document.createElement('option');
-			                    option2.value = dt.id;
-			                    option2.textContent = dt.name;
-			                    
-
-		                		const option3 = document.createElement('option');
-			                    option3.value = dt.id;
-			                    option3.textContent = dt.name;
-			                    
-			                    selectConsult.appendChild(option1);
-			                    selectConsult2.appendChild(option2);
-			                    selectConsult3.appendChild(option3);
-		                	}
-		                	
-							if(dt.userType == "Normal User"){
-								const option1 = document.createElement('option');
-			                    option1.value = dt.id;
-			                    option1.textContent = dt.name;
-			                    user1.appendChild(option1);
-							}
-							
+		                    const option = createOption(dt.id, dt.name);
+		                    if (dt.userType === "Consultant") {
+		                        selectConsultElements.forEach(selectConsult => {
+		                            selectConsult.appendChild(option.cloneNode(true));
+		                        });
+		                    } else if (dt.userType === "Normal User") {
+		                        user1.appendChild(option);
+		                    }
 		                });
-		                
-		                
+
 		            } else {
 		                console.log('Request failed with status:', xhr.status);
 		            }
@@ -682,11 +658,10 @@ if (session.getAttribute("email") == null) {
 
 		    xhr.send();
 		}
-		
-		function LoadApointmentList() {
-			const jobtypeUrl = hostUrl+'/get-appointment';
 			
-		    var xhr = new XMLHttpRequest();
+		function LoadAppointmentList() {
+		    const jobtypeUrl = hostUrl + '/get-appointment';
+		    const xhr = new XMLHttpRequest();
 		    xhr.open("GET", jobtypeUrl, true);
 
 		    xhr.onreadystatechange = function() {
@@ -694,145 +669,21 @@ if (session.getAttribute("email") == null) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
 		                
+		                const tableBodies = [
+		                    document.getElementById("appList"),
+		                    document.getElementById("appList2"),
+		                    document.getElementById("appList3")
+		                ];
 		                
-		                const tableBody  = document.getElementById("appList");
-		                tableBody.innerHTML = '';
-		                
-		                const tableBody2  = document.getElementById("appList2");
-		                tableBody2.innerHTML = '';
-		                
-
-		                const tableBody3  = document.getElementById("appList3");
-		                tableBody3.innerHTML = '';
-		                
-		                data.forEach((application, index) => {
-		                    const row = document.createElement("tr");
-		                    
-		                    const indexCell = document.createElement("td");
-		                    indexCell.textContent = index + 1;
-		                    row.appendChild(indexCell);
-
-		                    const jobTypeCell = document.createElement("td");
-		                    jobTypeCell.textContent = application.jobName;
-		                    row.appendChild(jobTypeCell);
-
-		                    const consultCell = document.createElement("td");
-		                    consultCell.textContent = application.ConsultName;
-		                    row.appendChild(consultCell);
-
-		                    const dateCell = document.createElement("td");
-		                    dateCell.textContent = application.date;
-		                    row.appendChild(dateCell);
-
-		                    const timeCell = document.createElement("td");
-		                    timeCell.textContent = application.time;
-		                    row.appendChild(timeCell);
-		                    
-		                    const statusCell = document.createElement("td");
-		                    statusCell.textContent = application.state;
-		                    row.appendChild(statusCell);
-		                    
-		                    const actionCell = document.createElement("td");
-		                    const deleteButton = document.createElement("button");
-		                    deleteButton.type = "button";
-		                    deleteButton.classList.add("btn", "btn-outline-danger");
-		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton.addEventListener("click", function() {
-		                        const appId = application.appId;
-		                        deleteApplication(appId);
+		                tableBodies.forEach((tableBody, index) => {
+		                    tableBody.innerHTML = '';
+		                    data.forEach((application, dataIndex) => {
+		                        tableBody.appendChild(createTableRow(application, dataIndex));
 		                    });
-		                    actionCell.appendChild(deleteButton);
-		                    row.appendChild(actionCell);
-		                    tableBody.appendChild(row);
-		                    
-		                    //row2
-		                    const row2 = document.createElement("tr");
-		                    
-		                    const indexCell2 = document.createElement("td");
-		                    indexCell2.textContent = index + 1;
-		                    row2.appendChild(indexCell2);
-
-		                    const consultCell2 = document.createElement("td");
-		                    consultCell2.textContent = application.appUserName;
-		                    row2.appendChild(consultCell2);
-		                    
-		                    const jobTypeCell2 = document.createElement("td");
-		                    jobTypeCell2.textContent = application.jobName;
-		                    row2.appendChild(jobTypeCell2);
-
-		                    
-
-		                    const dateCell2 = document.createElement("td");
-		                    dateCell2.textContent = application.date;
-		                    row2.appendChild(dateCell2);
-
-		                    const timeCell2 = document.createElement("td");
-		                    timeCell2.textContent = application.time;
-		                    row2.appendChild(timeCell2);
-		                    
-		                    const statusCell2 = document.createElement("td");
-		                    statusCell2.textContent = application.state;
-		                    row2.appendChild(statusCell2);
-		                    
-		                    const actionCell2 = document.createElement("td");
-		                    const deleteButton2 = document.createElement("button");
-		                    deleteButton2.type = "button";
-		                    deleteButton2.classList.add("btn", "btn-outline-danger");
-		                    deleteButton2.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton2.addEventListener("click", function() {
-		                        const appId = application.appId;
-		                        deleteApplication(appId);
-		                    });
-		                    actionCell2.appendChild(deleteButton2);
-		                    row2.appendChild(actionCell2);
-		                    tableBody2.appendChild(row2);
-		                    
-		                  	//row3
-		                    const row3 = document.createElement("tr");
-		                    
-		                    const indexCell3 = document.createElement("td");
-		                    indexCell3.textContent = index + 1;
-		                    row3.appendChild(indexCell3);
-
-		                    const consultCell3 = document.createElement("td");
-		                    consultCell3.textContent = application.appUserName;
-		                    row3.appendChild(consultCell3);
-		                    
-		                    const jobTypeCell3 = document.createElement("td");
-		                    jobTypeCell3.textContent = application.jobName;
-		                    row3.appendChild(jobTypeCell3);
-
-		                    const dateCell3 = document.createElement("td");
-		                    dateCell3.textContent = application.date;
-		                    row3.appendChild(dateCell3);
-
-		                    const timeCell3 = document.createElement("td");
-		                    timeCell3.textContent = application.time;
-		                    row3.appendChild(timeCell3);
-		                    
-		                    const statusCell3 = document.createElement("td");
-		                    statusCell3.textContent = application.state;
-		                    row3.appendChild(statusCell3);
-		                    
-		                    const actionCell3 = document.createElement("td");
-		                    const deleteButton3 = document.createElement("button");
-		                    deleteButton3.type = "button";
-		                    deleteButton3.classList.add("btn", "btn-outline-danger");
-		                    deleteButton3.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton3.addEventListener("click", function() {
-		                        const appId = application.appId;
-		                        deleteApplication(appId);
-		                    });
-		                    actionCell3.appendChild(deleteButton2);
-		                    row3.appendChild(actionCell3);
-		                    
-
-		                    tableBody3.appendChild(row3);
 		                });
 		                
 		            } else {
-
-		            	debugger;
+		                debugger;
 		                console.log('Request failed with status:', xhr.status);
 		            }
 		        }
@@ -841,65 +692,90 @@ if (session.getAttribute("email") == null) {
 		    xhr.send();
 		}
 		
+		function createDeleteButton(application) {
+		    const deleteButton = document.createElement("button");
+		    deleteButton.type = "button";
+		    deleteButton.classList.add("btn", "btn-outline-danger");
+		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		    deleteButton.addEventListener("click", function() {
+		        const appId = application.appId;
+		        deleteApplication(appId);
+		    });
+		    return deleteButton;
+		}
+
+		function createTableCell(text) {
+		    const cell = document.createElement("td");
+		    cell.textContent = text;
+		    return cell;
+		}
+
+		function createTableRow(application, index) {
+		    const row = document.createElement("tr");
+		    row.appendChild(createTableCell(index + 1));
+		    row.appendChild(createTableCell(application.appUserName));
+		    row.appendChild(createTableCell(application.jobName));
+		    row.appendChild(createTableCell(application.date));
+		    row.appendChild(createTableCell(application.time));
+		    row.appendChild(createTableCell(application.state));
+		    const deleteButtonCell = document.createElement("td");
+		    deleteButtonCell.appendChild(createDeleteButton(application));
+		    row.appendChild(deleteButtonCell);
+		    return row;
+		}
+		
+		function createDeleteUserButton(id) {
+		    const deleteButton = document.createElement("button");
+		    deleteButton.type = "button";
+		    deleteButton.classList.add("btn", "btn-outline-danger");
+		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		    deleteButton.addEventListener("click", function() {
+		        deleteUser(id);
+		    });
+		    return deleteButton;
+		}
+
+		function createTableCell(text) {
+		    const cell = document.createElement("td");
+		    cell.textContent = text;
+		    return cell;
+		}
+
+		function createUserRow(application, index) {
+		    const row = document.createElement("tr");
+		    
+		    row.appendChild(createTableCell(index + 1));
+		    row.appendChild(createTableCell(application.name));
+		    row.appendChild(createTableCell(application.email));
+		    row.appendChild(createTableCell(application.userType));
+		    row.appendChild(createTableCell(application.mobile));
+		    
+		    const actionCell = document.createElement("td");
+		    actionCell.appendChild(createDeleteUserButton(application.id));
+		    row.appendChild(actionCell);
+		    
+		    return row;
+		}
+
 		function LoadUserList() {
-			const jobtypeUrl = hostUrl+'/getUsers';
-			
-		    var xhr = new XMLHttpRequest();
+		    const jobtypeUrl = hostUrl + '/getUsers';
+		    const xhr = new XMLHttpRequest();
 		    xhr.open("GET", jobtypeUrl, true);
 
 		    xhr.onreadystatechange = function() {
 		        if (xhr.readyState === XMLHttpRequest.DONE) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
-		                
-		                
-		                const tableBody  = document.getElementById("userList");
+		                const tableBody = document.getElementById("userList");
 		                tableBody.innerHTML = '';
-		                
 
-		                
 		                data.forEach((application, index) => {
-		                    const row = document.createElement("tr");
-		                    
-		                    const indexCell = document.createElement("td");
-		                    indexCell.textContent = index + 1;
-		                    row.appendChild(indexCell);
-
-		                    const jobTypeCell = document.createElement("td");
-		                    jobTypeCell.textContent = application.name;
-		                    row.appendChild(jobTypeCell);
-
-		                    const consultCell = document.createElement("td");
-		                    consultCell.textContent = application.email;
-		                    row.appendChild(consultCell);
-
-		                    const dateCell = document.createElement("td");
-		                    dateCell.textContent = application.userType;
-		                    row.appendChild(dateCell);
-
-		                    const timeCell = document.createElement("td");
-		                    timeCell.textContent = application.mobile;
-		                    row.appendChild(timeCell);
-		                    
-		                    const actionCell = document.createElement("td");
-		                    const deleteButton = document.createElement("button");
-		                    deleteButton.type = "button";
-		                    deleteButton.classList.add("btn", "btn-outline-danger");
-		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton.addEventListener("click", function() {
-		                        const appId = application.id;
-		                        deleteUser(appId);
-		                    });
-		                    actionCell.appendChild(deleteButton);
-		                    row.appendChild(actionCell);
-		                    
+		                    const row = createUserRow(application, index);
 		                    tableBody.appendChild(row);
-		                    
 		                });
 		                
 		            } else {
-
-		            	debugger;
+		                debugger;
 		                console.log('Request failed with status:', xhr.status);
 		            }
 		        }
@@ -956,104 +832,74 @@ if (session.getAttribute("email") == null) {
 		        console.log('Error:', error);
 		    });
 		}
-		//get consult time
+
+		
+		function createDeleteButton(appId) {
+		    const deleteButton = document.createElement("button");
+		    deleteButton.type = "button";
+		    deleteButton.classList.add("btn", "btn-outline-danger");
+		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		    deleteButton.addEventListener("click", function() {
+		        deleteConsultTime(appId);
+		    });
+		    return deleteButton;
+		}
+
+		function createTableCell(text) {
+		    const cell = document.createElement("td");
+		    cell.textContent = text;
+		    return cell;
+		}
+
+		function createConsultTimeRow(application, index) {
+		    const row = document.createElement("tr");
+
+		    row.appendChild(createTableCell(index + 1));
+		    row.appendChild(createTableCell(application.jobName));
+		    row.appendChild(createTableCell(application.conDate));
+		    row.appendChild(createTableCell(application.conTime));
+
+		    const actionCell = document.createElement("td");
+		    actionCell.appendChild(createDeleteButton(application.id));
+		    row.appendChild(actionCell);
+
+		    return row;
+		}
+
+		function createConsultTimeRowWithConsultant(application, index) {
+		    const row = createConsultTimeRow(application, index);
+
+		    const consultCell = createTableCell(application.conName);
+		    row.appendChild(consultCell);
+
+		    return row;
+		}
 		
 		function LoadConsultTime() {
-			const jobtypeUrl = hostUrl+'/get-consult';
-			
-		    var xhr = new XMLHttpRequest();
+		    const jobtypeUrl = hostUrl + '/get-consult';
+		    const xhr = new XMLHttpRequest();
 		    xhr.open("GET", jobtypeUrl, true);
 
 		    xhr.onreadystatechange = function() {
 		        if (xhr.readyState === XMLHttpRequest.DONE) {
 		            if (xhr.status === 200) {
 		                const data = JSON.parse(xhr.responseText);
+		                const tableBody = document.getElementById("tbodyConList");
+		                const tableBody2 = document.getElementById("tbodyConList2");
 		                
-		                const tableBody  = document.getElementById("tbodyConList");
 		                tableBody.innerHTML = '';
-		                
-		                const tableBody2  = document.getElementById("tbodyConList2");
-	                	tableBody2.innerHTML = '';
-		                
+		                tableBody2.innerHTML = '';
+
 		                data.forEach((application, index) => {
-		                    const row = document.createElement("tr");
-		                    
-		                    const indexCell = document.createElement("td");
-		                    indexCell.textContent = index + 1;
-		                    row.appendChild(indexCell);
+		                    const row1 = createConsultTimeRow(application, index);
+		                    tableBody.appendChild(row1);
 
-		                    const jobTypeCell = document.createElement("td");
-		                    jobTypeCell.textContent = application.jobName;
-		                    row.appendChild(jobTypeCell);
-
-		                  
-		                    const dateCell = document.createElement("td");
-		                    dateCell.textContent = application.conDate;
-		                    row.appendChild(dateCell);
-
-		                    const timeCell = document.createElement("td");
-		                    timeCell.textContent = application.conTime;
-		                    row.appendChild(timeCell);
-		                    		                    
-		                    const actionCell = document.createElement("td");
-		                    const deleteButton = document.createElement("button");
-		                    deleteButton.type = "button";
-		                    deleteButton.classList.add("btn", "btn-outline-danger");
-		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton.addEventListener("click", function() {
-		                        const appId = application.id;
-		                        deleteConsultTime(appId);
-		                    });
-		                    actionCell.appendChild(deleteButton);
-		                    row.appendChild(actionCell);
-		                    
-		                    tableBody.appendChild(row);
-		                    
-		                    //row2
-							const row2 = document.createElement("tr");
-		                    
-		                    const indexCell2 = document.createElement("td");
-		                    indexCell2.textContent = index + 1;
-		                    row2.appendChild(indexCell2);
-
-		                    const jobTypeCell2 = document.createElement("td");
-		                    jobTypeCell2.textContent = application.jobName;
-		                    row2.appendChild(jobTypeCell2);
-
-		                    
-
-		                    const dateCell2 = document.createElement("td");
-		                    dateCell2.textContent = application.conDate;
-		                    row2.appendChild(dateCell2);
-
-		                    const timeCell2 = document.createElement("td");
-		                    timeCell2.textContent = application.conTime;
-		                    row2.appendChild(timeCell2);
-		                    		            
-		                    const consultCell2 = document.createElement("td");
-		                    consultCell2.textContent = application.conName;
-		                    row2.appendChild(consultCell2);
-		                    
-		                    const actionCell2 = document.createElement("td");
-		                    const deleteButton2 = document.createElement("button");
-		                    deleteButton2.type = "button";
-		                    deleteButton2.classList.add("btn", "btn-outline-danger");
-		                    deleteButton2.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		                    deleteButton2.addEventListener("click", function() {
-		                        const appId = application.id;
-		                        deleteConsultTime(appId);
-		                    });
-		                    actionCell2.appendChild(deleteButton2);
-		                    row2.appendChild(actionCell2);
-		                    
+		                    const row2 = createConsultTimeRowWithConsultant(application, index);
 		                    tableBody2.appendChild(row2);
-		                    
-		                    
 		                });
-		                
-		            } else {
 
-		            	debugger;
+		            } else {
+		                debugger;
 		                console.log('Request failed with status:', xhr.status);
 		            }
 		        }
@@ -1061,6 +907,7 @@ if (session.getAttribute("email") == null) {
 
 		    xhr.send();
 		}
+
 
 		
 		function deleteConsultTime(appId) {

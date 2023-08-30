@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="com.model.JobTypeModel"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.connection.JobTypeBA"/>
+    <fullyQualifiedTypeName name="com.connection.AppointmentBA"/>
+    <fullyQualifiedTypeName name="com.model.AppointmentModel"/>
+    <fullyQualifiedTypeName name="com.model.ConsultModel"/>
+    <fullyQualifiedTypeName name="com.connection.ConsultBA"/>
+    <fullyQualifiedTypeName name="com.connection.UserBA"/>
 </qualifiedTypeNameHistroy>
