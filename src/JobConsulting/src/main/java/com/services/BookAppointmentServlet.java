@@ -28,6 +28,7 @@ public class BookAppointmentServlet extends HttpServlet {
 		int conId = Integer.parseInt(request.getParameter("consultant"));
 		int userId = 0;
 	
+		System.out.println(date);
 		
 		RequestDispatcher dispatcher = null;
 		
@@ -38,7 +39,7 @@ public class BookAppointmentServlet extends HttpServlet {
 			String uid = uidObj.toString();
 			userId = Integer.parseInt(uid);
 			
-			AppointmentModel model = new AppointmentModel( 0, jobId, userId,conId, date,time);
+			AppointmentModel model = new AppointmentModel( 0, jobId, userId,conId, date,time,"","","","Pending");
 			AppointmentBA modelBA = new AppointmentBA();
 				
 				int rowCount = modelBA.CreateAppointmentRecord(model);

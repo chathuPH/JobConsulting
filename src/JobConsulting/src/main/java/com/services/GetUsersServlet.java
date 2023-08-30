@@ -32,13 +32,17 @@ public class GetUsersServlet extends HttpServlet {
 
 			UserBA modelBA = new UserBA();
             List<UserModel> rowCount = modelBA.GetUsers();
-
+            System.out.println("******  started *******");
             if (rowCount != null) {
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json");
 
                 Gson gson = new Gson();
                 String json = gson.toJson(rowCount);
+
+                System.out.println("****** Users founded *******");
+                System.out.println(json);
+                
                 response.getWriter().write(json);
                 return; 
             }

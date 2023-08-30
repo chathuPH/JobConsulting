@@ -32,7 +32,7 @@ public class AdminBookAppointmentServlet extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		
 		try {
-			AppointmentModel model = new AppointmentModel( 0, jobId, userId,conId, date,time);
+			AppointmentModel model = new AppointmentModel( 0, jobId, userId,conId, date,time,"","","","Pending");
 			AppointmentBA modelBA = new AppointmentBA();
 				
 				int rowCount = modelBA.CreateAppointmentRecord(model);

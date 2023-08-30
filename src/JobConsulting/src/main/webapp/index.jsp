@@ -57,9 +57,6 @@ if (session.getAttribute("email") == null) {
 			</h1>
 			<nav id="navbar" class="navbar">
 				<ul>
-					<!-- 
-								<li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-							 -->
 					<li style="margin-left: 10px;"><%=session.getAttribute("name")%></span>
 					</li>
 					<li onClick="Logout()"><a class="getstarted scrollto"
@@ -100,12 +97,9 @@ if (session.getAttribute("email") == null) {
 
 									</div>
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Consultant</label> <select
-											class="form-control" id="consultant" name="consultant">
-											<option></option>
-											<option value="1">Bob Harizon</option>
-											<option value="2">John Smith</option>
-										</select> 
+										<label class="mb-2">Consultant</label> 
+										
+										<select id="consultant" name="consultant" class="form-control"></select>
 									
 
 									</div>
@@ -113,11 +107,11 @@ if (session.getAttribute("email") == null) {
 
 
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Date</label> <input type="date" name=""
+										<label class="mb-2">Date</label> <input type="date" name="date"
 											id="" class="form-control" />
 									</div>
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Time</label> <input type="time" name=""
+										<label class="mb-2">Time</label> <input type="time" name="time"
 											id="" class="form-control" />
 									</div>
 
@@ -156,36 +150,11 @@ if (session.getAttribute("email") == null) {
 										<th scope="col">Consultant</th>
 										<th scope="col">Date</th>
 										<th scope="col">Time</th>
+										<th scope="col">Status</th>
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Software Engineer</td>
-										<td>Bob Harizon</td>
-										<td>29/08/2023</td>
-										<td>8.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">2</th>
-										<td>Software Engineer</td>
-										<td>John Smith</td>
-										<td>30/08/2023</td>
-										<td>8.30 PM</td>
-										<td>
-											<button type="button" class="btn btn-outline-danger">
-												<i class="ri-delete-bin-line"></i>
-											</button>
-										</td>
-									</tr>
-
-								</tbody>
+								<tbody id="appList"></tbody>
 							</table>
 						</div>
 
@@ -371,13 +340,9 @@ if (session.getAttribute("email") == null) {
 												</select> 
 											</div>
 											<div class="col-sm-6 mb-2">
-												<label class="mb-2">Consultant</label> <select
-													class="form-control" id="exampleFormControlSelect1"
-													name="conUser">
-													<option></option>
-													<option value="1">Bob Harizon</option>
-													<option value="2">John Smith</option>
-												</select>
+												<label class="mb-2">Consultant</label> 
+												<select id="consultant2" name="conUser" class="form-control"></select>
+									
 											</div>
 											<div class="col-sm-6 mb-2">
 												<button type="clear" class="btn btn-danger mb-2 col-sm-12">Clear</button>
@@ -460,32 +425,24 @@ if (session.getAttribute("email") == null) {
 										<select id="jobTypeSelect4" name="jobTypeSelect" class="form-control"></select> 
 									</div>
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Consultant</label> <select
-											class="form-control" id="consultant" name="consultant">
-											<option></option>
-											<option value="1">Bob Harizon</option>
-											<option value="2">John Smith</option>
-										</select>
-
+										<label class="mb-2">Consultant</label> 
+										<select id="consultant3" name="consultant" class="form-control"></select>
 									</div>
 
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Date</label> <input type="date" name=""
+										<label class="mb-2">Date</label> <input type="date" name="date"
 											id="" class="form-control" />
 									</div>
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Time</label> <input type="time" name=""
+										<label class="mb-2">Time</label> <input type="time" name="time"
 											id="" class="form-control" />
 									</div>
 
 									<div class="col-sm-6 mb-2">
-										<label class="mb-2">Appointment User</label> <select
-											class="form-control" id="appUser" name="appUser">
-											<option></option>
-											<option value="1">Asanka Yaparathna</option>
-											<option value="2">Teacher</option>
-											<option value="3">Doctor</option>
-										</select>
+										<label class="mb-2">Appointment User</label> 
+										<select id="user1" name="appUser" class="form-control"></select>
+									
+										
 									</div>
 
 									<div class="col-sm-6 mb-2">
@@ -565,13 +522,6 @@ if (session.getAttribute("email") == null) {
 				Rights Reserved
 			</div>
 
-			<!-- 
-      
-      	<div class="credits">
-       Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-       -->
-
 		</div>
 	</footer>
 	<!-- End Footer -->
@@ -620,6 +570,9 @@ if (session.getAttribute("email") == null) {
 		}
 
 		LoadUserDiv();
+		LoadJobType();
+		LoadConsultUser();
+		LoadApointmentList();
 
 		function LoadUserDiv() {
 			if (status != null && status == "true") {
@@ -648,28 +601,6 @@ if (session.getAttribute("email") == null) {
 
 		}
 		
-		LoadJobType();
-		function LoadJobType1(){
-			debugger;
-			const jobtypeUrl = hostUrl+'/get-job-type';
-			fetch(jobtypeUrl)
-            .then(response => response.json()) 
-            .then(data => {
-                const jobTypeSelect = document.getElementById('jobTypeSelect');
-
-				debugger;
-                data.forEach(jobType => {
-                    const option = document.createElement('option');
-                    option.value = jobType.id;
-                    option.textContent = jobType.name;
-                    jobTypeSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.log('Error:', error);
-            });
-
-		}
 		function LoadJobType() {
 			const jobtypeUrl = hostUrl+'/get-job-type';
 			
@@ -678,10 +609,7 @@ if (session.getAttribute("email") == null) {
 
 		    xhr.onreadystatechange = function() {
 		        if (xhr.readyState === XMLHttpRequest.DONE) {
-
-	            	debugger;
 		            if (xhr.status === 200) {
-		            	debugger;
 		                const data = JSON.parse(xhr.responseText);
 
 		                const jobTypeSelect = document.getElementById("jobTypeSelect");
@@ -717,6 +645,135 @@ if (session.getAttribute("email") == null) {
 		                    jobTypeSelect4.appendChild(option4);
 		                });
 		                
+		            } else {
+
+		            	debugger;
+		                console.log('Request failed with status:', xhr.status);
+		            }
+		        }
+		    };
+
+		    xhr.send();
+		}
+
+		function LoadConsultUser() {
+			const jobtypeUrl = hostUrl+'/getUsers';
+			
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", jobtypeUrl, true);
+
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+		            if (xhr.status === 200) {
+		                const data = JSON.parse(xhr.responseText);
+
+		                const selectConsult = document.getElementById("consultant");
+		                const selectConsult2 = document.getElementById("consultant2");
+		                const selectConsult3 = document.getElementById("consultant3");
+		                const user1 = document.getElementById("user1");
+		                
+		                selectConsult.innerHTML = ''; 
+		                selectConsult2.innerHTML = ''; 
+		                selectConsult3.innerHTML = ''; 
+		                user1.innerHTML = '';
+
+		                data.forEach(dt => {
+		                	if(dt.userType == "Consultant"){
+		                		const option1 = document.createElement('option');
+			                    option1.value = dt.id;
+			                    option1.textContent = dt.name;
+			                    
+
+		                		const option2 = document.createElement('option');
+			                    option2.value = dt.id;
+			                    option2.textContent = dt.name;
+			                    
+
+		                		const option3 = document.createElement('option');
+			                    option3.value = dt.id;
+			                    option3.textContent = dt.name;
+			                    
+			                    selectConsult.appendChild(option1);
+			                    selectConsult2.appendChild(option2);
+			                    selectConsult3.appendChild(option3);
+		                	}
+		                	
+							if(dt.userType == "Normal User"){
+								const option1 = document.createElement('option');
+			                    option1.value = dt.id;
+			                    option1.textContent = dt.name;
+			                    user1.appendChild(option1);
+							}
+							
+		                });
+		                
+		                
+		            } else {
+		                console.log('Request failed with status:', xhr.status);
+		            }
+		        }
+		    };
+
+		    xhr.send();
+		}
+		
+		function LoadApointmentList() {
+			const jobtypeUrl = hostUrl+'/get-appointment';
+			
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", jobtypeUrl, true);
+
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === XMLHttpRequest.DONE) {
+		            if (xhr.status === 200) {
+		                const data = JSON.parse(xhr.responseText);
+		                
+
+		                const tableBody  = document.getElementById("appList");
+		                
+		                tableBody.innerHTML = ''; // Clear existing table rows
+
+		                data.forEach((application, index) => {
+		                    const row = document.createElement("tr");
+		                    
+		                    const indexCell = document.createElement("td");
+		                    indexCell.textContent = index + 1;
+		                    row.appendChild(indexCell);
+
+		                    const jobTypeCell = document.createElement("td");
+		                    jobTypeCell.textContent = application.jobName;
+		                    row.appendChild(jobTypeCell);
+
+		                    const consultCell = document.createElement("td");
+		                    consultCell.textContent = application.ConsultName;
+		                    row.appendChild(consultCell);
+
+		                    const dateCell = document.createElement("td");
+		                    dateCell.textContent = application.date;
+		                    row.appendChild(dateCell);
+
+		                    const timeCell = document.createElement("td");
+		                    timeCell.textContent = application.time;
+		                    row.appendChild(timeCell);
+		                    
+		                    const statusCell = document.createElement("td");
+		                    statusCell.textContent = application.state;
+		                    row.appendChild(statusCell);
+		                    
+		                    const actionCell = document.createElement("td");
+		                    const deleteButton = document.createElement("button");
+		                    deleteButton.type = "button";
+		                    deleteButton.classList.add("btn", "btn-outline-danger");
+		                    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
+		                    deleteButton.addEventListener("click", function() {
+		                        const appId = application.appId; // Get the appId
+		                        deleteApplication(appId);
+		                    });
+		                    actionCell.appendChild(deleteButton);
+		                    row.appendChild(actionCell);
+
+		                    tableBody.appendChild(row);
+		                });
 		                
 		            } else {
 
@@ -729,8 +786,32 @@ if (session.getAttribute("email") == null) {
 		    xhr.send();
 		}
 
-
-			</script>
+		
+		function deleteApplication(appId) {
+			debugger;
+			const deleteUrl  = hostUrl+'/delete-appointment?appId='+appId;
+			fetch(deleteUrl, {
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/x-www-form-urlencoded'
+		        },
+		        body: 'appId='+appId
+		    })
+		    .then(response => {
+		    	debugger;
+		        if (response.status === 200) {
+		        	//window.location.reload();
+		        	LoadApointmentList();
+		        } else {
+		            console.log('Failed to delete application');
+		        }
+		    })
+		    .catch(error => {
+		        console.log('Error:', error);
+		    });
+		}
+		
+	</script>
 
 </body>
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.model.JobTypeModel;
@@ -64,7 +65,7 @@ public class UserBA {
 	
 	public List<UserModel> GetUsers() {
 
-		List<UserModel> responseModel = null;
+		List<UserModel> responseModel = new ArrayList<>();
 
 		try {
 			DataAccess dataAccess = new DataAccess();
@@ -76,8 +77,6 @@ public class UserBA {
 			ResultSet rs = pst.executeQuery();
 			
 	        while (rs.next()) {
-	            int jobId = rs.getInt("JOB_ID");
-	            String jobName = rs.getString("JOB_NAME");
 	            UserModel model = new UserModel(rs.getInt("US_ID"), rs.getString("US_NAME"),rs.getString("US_EMAIL"),"",rs.getString("US_MOBILE"),rs.getString("US_TYPE"));
 	            responseModel.add(model);
 	        }

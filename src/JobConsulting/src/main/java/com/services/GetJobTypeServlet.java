@@ -37,18 +37,12 @@ public class GetJobTypeServlet extends HttpServlet {
 
             if (rowCount != null) {
                 //request.setAttribute("jobTypeList", rowCount);
-                System.out.println("****** Job type founded *******");
                 
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json");
 
                 Gson gson = new Gson();
                 String json = gson.toJson(rowCount);
-
-                
-                
-                System.out.println("JSON String: " + json); 
-                System.out.println("****************************");
                 response.getWriter().write(json);
                 return; 
             }
