@@ -16,10 +16,10 @@ if (session.getAttribute("email") == null) {
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	
 	<title>Home Page - Job Consulting</title>
+	<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.16.0/dist/pdf-lib.js"></script>
+	
 	<meta content="" name="description">
 	<meta content="" name="keywords">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	<!-- Favicons -->
 	<link href="assets/img/favicon.png" rel="icon">
 	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -62,7 +62,6 @@ if (session.getAttribute("email") == null) {
 				</ul>
 				<i class="bi bi-list mobile-nav-toggle"></i>
 			</nav>
-			<!-- .navbar -->
 		</div>
 	</header>
 	<!-- End Header -->
@@ -352,7 +351,7 @@ if (session.getAttribute("email") == null) {
 											<div class="col-6"></div>
 											<div class="col-6">
 												<button type="submit"
-													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateBooking()">Generate Report 
+													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateBooking('rp-booking')">Generate Report 
 												</button>
 											</div>
 										</div>
@@ -442,7 +441,7 @@ if (session.getAttribute("email") == null) {
 											<div class="col-6"></div>
 											<div class="col-6">
 												<button type="submit"
-													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateUser()">Generate Report 
+													class="btn btn-success col-sm-12 mb-2 mt-1" onClick="GenerateBooking('rp-user')">Generate Report 
 												</button>
 											</div>
 										</div>
@@ -475,6 +474,7 @@ if (session.getAttribute("email") == null) {
 		class="back-to-top d-flex align-items-center justify-content-center"><i
 		class="bi bi-arrow-up-short"></i></a>
 	<!-- Vendor JS Files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 	<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
 	<script src="assets/vendor/aos/aos.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -482,7 +482,6 @@ if (session.getAttribute("email") == null) {
 	<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 	<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 	<script src="assets/vendor/php-email-form/validate.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 
 	<script src="assets/js/main.js"></script>
@@ -537,6 +536,7 @@ if (session.getAttribute("email") == null) {
 			}
 		}
 	</script>
+	
 	
 	<script src="assets/js/load.data.min.js"></script>
 </body>
