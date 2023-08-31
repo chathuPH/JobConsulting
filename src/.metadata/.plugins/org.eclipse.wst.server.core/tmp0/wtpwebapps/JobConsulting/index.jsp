@@ -270,7 +270,7 @@ if (session.getAttribute("email") == null) {
 
 											<div class="col-sm-6 mb-2">
 												<label class="mb-2">Job Type</label> 
-												<select id="jobTypeSelect3" name="jobTypeSelect" class="form-control">
+												<select id="jobTypeSelect3" name="jobType" class="form-control">
 												</select> 
 											</div>
 											<div class="col-sm-6 mb-2">
@@ -502,24 +502,17 @@ if (session.getAttribute("email") == null) {
 	<script src="assets/vendor/php-email-form/validate.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-	<!-- Template Main JS File -->
+
 	<script src="assets/js/main.js"></script>
 	<script src="assets/vendor/alert/sweetalert.min.js"></script>
-	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+	
 	<script>
-		
-		const currentURL = window.location.href;
-		const protocol = window.location.protocol;
-		const host = window.location.host;
-		const hostUrl = protocol+"//"+host+"/JobConsulting";
-
-				
 		var status = '<%=session.getAttribute("status")%>';
 		var massage = '<%=session.getAttribute("massage")%>';
 		const value = sessionStorage.getItem('indexKey');
-		
+	
 		var headerText = document.getElementById("headerText");
-
+	
 		if (status != null && status == "false" && value == null) {
 			swal("Error!", massage, "error");
 			sessionStorage.setItem('indexKey', 1);
@@ -527,19 +520,13 @@ if (session.getAttribute("email") == null) {
 			swal("Success!", massage, "success");
 			sessionStorage.setItem('indexKey', 1);
 		}
-
-
+	
+	
 		function Logout() {
 			sessionStorage.clear();
 		}
-
-		LoadUserDiv();
-		LoadJobType();
-		LoadConsultUser();
-		LoadAppointmentList();
-		LoadConsultTime();
-		LoadUserList();
-
+			LoadUserDiv();
+			
 		function LoadUserDiv() {
 			if (status != null && status == "true") {
 				const logedUserType = "<%=session.getAttribute("userType")%>";
@@ -567,391 +554,9 @@ if (session.getAttribute("email") == null) {
 			    }
 			}
 		}
-		
-		function LoadJobType() {
-		    const jobtypeUrl = hostUrl + '/get-job-type';
-
-		    var xhr = new XMLHttpRequest();
-		    xhr.open("GET", jobtypeUrl, true);
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                const data = JSON.parse(xhr.responseText);
-
-		                const jobTypeSelectElements = [
-		                    document.getElementById("jobTypeSelect"),
-		                    document.getElementById("jobTypeSelect2"),
-		                    document.getElementById("jobTypeSelect3"),
-		                    document.getElementById("jobTypeSelect4")
-		                ];
-
-		                jobTypeSelectElements.forEach(jobTypeSelect => {
-		                    jobTypeSelect.innerHTML = '';
-		                });
-
-		                data.forEach(jobType => {
-		                    const option = createOption(jobType.id, jobType.name);
-		                    jobTypeSelectElements.forEach(jobTypeSelect => {
-		                        jobTypeSelect.appendChild(option.cloneNode(true));
-		                    });
-		                });
-		            } else {
-		                debugger;
-		                console.log('Request failed with status:', xhr.status);
-		            }
-		        }
-		    };
-
-		    xhr.send();
-		}
-
-		
-
-		function createOption(value, text) {
-		    const option = document.createElement('option');
-		    option.value = value;
-		    option.textContent = text;
-		    return option;
-		}
-		
-		function LoadConsultUser() {
-		    const jobtypeUrl = hostUrl + '/getUsers';
-
-		    var xhr = new XMLHttpRequest();
-		    xhr.open("GET", jobtypeUrl, true);
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                const data = JSON.parse(xhr.responseText);
-
-		                const selectConsultElements = [
-		                    document.getElementById("consultant"),
-		                    document.getElementById("consultant2"),
-		                    document.getElementById("consultant3")
-		                ];
-
-		                const user1 = document.getElementById("user1");
-
-		                selectConsultElements.forEach(selectConsult => {
-		                    selectConsult.innerHTML = '';
-		                });
-		                user1.innerHTML = '';
-
-		                data.forEach(dt => {
-		                    const option = createOption(dt.id, dt.name);
-		                    if (dt.userType === "Consultant") {
-		                        selectConsultElements.forEach(selectConsult => {
-		                            selectConsult.appendChild(option.cloneNode(true));
-		                        });
-		                    } else if (dt.userType === "Normal User") {
-		                        user1.appendChild(option);
-		                    }
-		                });
-
-		            } else {
-		                console.log('Request failed with status:', xhr.status);
-		            }
-		        }
-		    };
-
-		    xhr.send();
-		}
-			
-		function LoadAppointmentList() {
-		    const jobtypeUrl = hostUrl + '/get-appointment';
-		    const xhr = new XMLHttpRequest();
-		    xhr.open("GET", jobtypeUrl, true);
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                const data = JSON.parse(xhr.responseText);
-		                
-		                const tableBodies = [
-		                    document.getElementById("appList"),
-		                    document.getElementById("appList2"),
-		                    document.getElementById("appList3")
-		                ];
-		                
-		                tableBodies.forEach((tableBody, index) => {
-		                    tableBody.innerHTML = '';
-		                    data.forEach((application, dataIndex) => {
-		                        tableBody.appendChild(createTableRow(application, dataIndex));
-		                    });
-		                });
-		                
-		            } else {
-		                debugger;
-		                console.log('Request failed with status:', xhr.status);
-		            }
-		        }
-		    };
-
-		    xhr.send();
-		}
-		
-		function createDeleteButton(application) {
-		    const deleteButton = document.createElement("button");
-		    deleteButton.type = "button";
-		    deleteButton.classList.add("btn", "btn-outline-danger");
-		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		    deleteButton.addEventListener("click", function() {
-		        const appId = application.appId;
-		        deleteApplication(appId);
-		    });
-		    return deleteButton;
-		}
-
-		function createTableCell(text) {
-		    const cell = document.createElement("td");
-		    cell.textContent = text;
-		    return cell;
-		}
-
-		function createTableRow(application, index) {
-		    const row = document.createElement("tr");
-		    row.appendChild(createTableCell(index + 1));
-		    row.appendChild(createTableCell(application.appUserName));
-		    row.appendChild(createTableCell(application.jobName));
-		    row.appendChild(createTableCell(application.date));
-		    row.appendChild(createTableCell(application.time));
-		    row.appendChild(createTableCell(application.state));
-		    const deleteButtonCell = document.createElement("td");
-		    deleteButtonCell.appendChild(createDeleteButton(application));
-		    row.appendChild(deleteButtonCell);
-		    return row;
-		}
-		
-		function createDeleteUserButton(id) {
-		    const deleteButton = document.createElement("button");
-		    deleteButton.type = "button";
-		    deleteButton.classList.add("btn", "btn-outline-danger");
-		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		    deleteButton.addEventListener("click", function() {
-		        deleteUser(id);
-		    });
-		    return deleteButton;
-		}
-
-		function createTableCell(text) {
-		    const cell = document.createElement("td");
-		    cell.textContent = text;
-		    return cell;
-		}
-
-		function createUserRow(application, index) {
-		    const row = document.createElement("tr");
-		    
-		    row.appendChild(createTableCell(index + 1));
-		    row.appendChild(createTableCell(application.name));
-		    row.appendChild(createTableCell(application.email));
-		    row.appendChild(createTableCell(application.userType));
-		    row.appendChild(createTableCell(application.mobile));
-		    
-		    const actionCell = document.createElement("td");
-		    actionCell.appendChild(createDeleteUserButton(application.id));
-		    row.appendChild(actionCell);
-		    
-		    return row;
-		}
-
-		function LoadUserList() {
-		    const jobtypeUrl = hostUrl + '/getUsers';
-		    const xhr = new XMLHttpRequest();
-		    xhr.open("GET", jobtypeUrl, true);
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                const data = JSON.parse(xhr.responseText);
-		                const tableBody = document.getElementById("userList");
-		                tableBody.innerHTML = '';
-
-		                data.forEach((application, index) => {
-		                    const row = createUserRow(application, index);
-		                    tableBody.appendChild(row);
-		                });
-		                
-		            } else {
-		                debugger;
-		                console.log('Request failed with status:', xhr.status);
-		            }
-		        }
-		    };
-
-		    xhr.send();
-		}
-
-		
-		function deleteApplication(appId) {
-			debugger;
-			const deleteUrl  = hostUrl+'/delete-appointment?appId='+appId;
-			fetch(deleteUrl, {
-		        method: 'POST',
-		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
-		        },
-		        body: 'appId='+appId
-		    })
-		    .then(response => {
-		    	debugger;
-		        if (response.status === 200) {
-		        	//window.location.reload();
-		        	LoadApointmentList();
-		        } else {
-		            console.log('Failed to delete application');
-		        }
-		    })
-		    .catch(error => {
-		        console.log('Error:', error);
-		    });
-		}
-		
-		function deleteUser(appId) {
-			debugger;
-			const deleteUrl  = hostUrl+'/delete-user?appId='+appId;
-			fetch(deleteUrl, {
-		        method: 'POST',
-		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
-		        },
-		        body: 'appId='+appId
-		    })
-		    .then(response => {
-		    	debugger;
-		        if (response.status === 200) {
-		        	//window.location.reload();
-		        	LoadApointmentList();
-		        } else {
-		            console.log('Failed to delete application');
-		        }
-		    })
-		    .catch(error => {
-		        console.log('Error:', error);
-		    });
-		}
-
-		
-		function createDeleteButton(appId) {
-		    const deleteButton = document.createElement("button");
-		    deleteButton.type = "button";
-		    deleteButton.classList.add("btn", "btn-outline-danger");
-		    deleteButton.innerHTML = '<i class="ri-delete-bin-line"></i>';
-		    deleteButton.addEventListener("click", function() {
-		        deleteConsultTime(appId);
-		    });
-		    return deleteButton;
-		}
-
-		function createTableCell(text) {
-		    const cell = document.createElement("td");
-		    cell.textContent = text;
-		    return cell;
-		}
-
-		function createConsultTimeRow(application, index) {
-		    const row = document.createElement("tr");
-
-		    row.appendChild(createTableCell(index + 1));
-		    row.appendChild(createTableCell(application.jobName));
-		    row.appendChild(createTableCell(application.conDate));
-		    row.appendChild(createTableCell(application.conTime));
-
-		    const actionCell = document.createElement("td");
-		    actionCell.appendChild(createDeleteButton(application.id));
-		    row.appendChild(actionCell);
-
-		    return row;
-		}
-
-		function createConsultTimeRowWithConsultant(application, index) {
-		    const row = createConsultTimeRow(application, index);
-
-		    const consultCell = createTableCell(application.conName);
-		    row.appendChild(consultCell);
-
-		    return row;
-		}
-		
-		function LoadConsultTime() {
-		    const jobtypeUrl = hostUrl + '/get-consult';
-		    const xhr = new XMLHttpRequest();
-		    xhr.open("GET", jobtypeUrl, true);
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                const data = JSON.parse(xhr.responseText);
-		                const tableBody = document.getElementById("tbodyConList");
-		                const tableBody2 = document.getElementById("tbodyConList2");
-		                
-		                tableBody.innerHTML = '';
-		                tableBody2.innerHTML = '';
-
-		                data.forEach((application, index) => {
-		                    const row1 = createConsultTimeRow(application, index);
-		                    tableBody.appendChild(row1);
-
-		                    const row2 = createConsultTimeRowWithConsultant(application, index);
-		                    tableBody2.appendChild(row2);
-		                });
-
-		            } else {
-		                debugger;
-		                console.log('Request failed with status:', xhr.status);
-		            }
-		        }
-		    };
-
-		    xhr.send();
-		}
-
-
-		
-		function deleteConsultTime(appId) {
-			debugger;
-			const deleteUrl  = hostUrl+'/delete-consult-time?appId='+appId;
-			fetch(deleteUrl, {
-		        method: 'POST',
-		        headers: {
-		            'Content-Type': 'application/x-www-form-urlencoded'
-		        },
-		        body: 'appId='+appId
-		    })
-		    .then(response => {
-		    	debugger;
-		        if (response.status === 200) {
-		        	//window.location.reload();
-		        	LoadConsultTime();
-		        } else {
-		            console.log('Failed to delete application');
-		        }
-		    })
-		    .catch(error => {
-		        console.log('Error:', error);
-		    });
-		}
-		
-		function GenerateBooking() {
-			debugger;
-		    const doc = new jsPDF();
-		    const table = document.getElementById('rp-booking');
-		    doc.autoTable({ html: table });
-		    doc.save('report-booking.pdf');
-		}
-		
-		function GenerateUser() {
-			debugger;
-		    const doc = new jsPDF();
-		    const table = document.getElementById('rp-user');
-		    doc.autoTable({ html: table });
-		    doc.save('report-User.pdf');
-		}
-		
 	</script>
-
+	
+	<script src="assets/js/load.data.min.js"></script>
 </body>
 
 </html>
